@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>vinsol_HTML_exercise</title>
+  </head>
+  <body>
+    <div id="container" style="background-color:#F4F4F4; width:600px;">
+      <h1 style="text-align:center;">HTML form exercise</h1>
+        <p>
+          <span style="color:red;"> Please note:</span> This Example demonstrate how HTML forms can be used. Submit button should submit the button and reset button should reset the form(revert the changes in form fields). The form layout should be the same as below.
+        </p>
+	<p>
+          <table border="0">
+            <caption><b>Contact form</b></caption>
+              <tr>
+                <td>Your name*:</td>
+		<td><input type="text" name="name"/></td>
+              </tr>
+              <tr>
+                <td>E-mail*:</td>
+		<td><input type="text" style="background-color:#FFFF94;" name="email id"/></td>
+              </tr>
+              <tr>
+                <td>Phone Number:</td>
+		<td><input type="text" style="background-color:#FFFF94;" name="phone number"/></td>
+              </tr>
+              <tr>
+                <td>Website*:</td>
+		<td><input type="text" size="30" value="http://" name="website"/></td>
+              </tr>
+          </table>
+        </p>
+        <p>Comments*:<br/>
+          <textarea rows="10" cols="30"></textarea>
+        </p>
+        <form action="" method="get">
+          <p>
+            <legend><b>Text field</b></legend>Your name:
+            <input  type="text" style="background-color:#FFFF94;" name="name"/>
+          </p>
+          <p>
+            <legend><b>Password field</b></legend>Password:
+            <input type="password" name="password"/>
+          </p>
+          <p>
+            <legend><b>Radio buttons</b></legend>Do you like pizza?<br/>
+            <input type="radio" checked name="like" value="yes"/>Yes<br/>
+            <input type="radio" name="like" value="no"/>No<br/>
+            <input type="radio" name="like" value="may be"/>May be<br/>
+            <input  type="radio" name="like" value="Never tried"/>Never tried
+          </p>
+          <p>
+            <legend><b>Check Box</b></legend>
+            <input type="checkbox" name="verify" value="like service"/>Check this box if you like our service
+          </p>
+          <p>
+            <legend><b>Text area</b></legend>Anything you would like to say?<br/>
+            <textarea rows="7" cols="40"></textarea>
+          </p>
+          <p>
+            <legend><b>I like</b></legend>
+            <select name="choice" style="background-color:#FFFFFF;" size="5">
+              <option value="mushrooms">Mushrooms</option>
+              <option value="green peppers">Green Peppers</option>
+              <option value="onions">Onions</option>
+              <option value="tomatoes">Tomatoes</option>
+              <option value="olives">Olives</option>
+            </select>
+          </p>
+          <p>
+            <legend><b>Menu</b></legend>Your favorite color:<br/>
+            <select name="menu" style="background-color:#FFFFFF;">
+              <option value="red">Red</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="yellow">Yellow</option>
+              <option value="black">Black</option>
+              <option value="white">White</option>
+            </select>
+          </p>
+          <p>
+            <legend><b>Attach file</b></legend>
+            <input type="file" name="CV"/>
+          </p>
+          <p>
+            <legend><b>Buttons</b></legend>
+            <input type="submit" value="submit"/>
+            <input type="reset" value="reset"/>
+          </p>
+        </form>
+      </div>
+    </body>
+</html>
