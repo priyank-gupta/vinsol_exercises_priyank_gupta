@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>form validation</title>
+<style  type="text/css">
+p
+{
+	margin-bottom:4px;
+	text-align:center;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:13px;
+}
+#go
+{
+	text-align:center;
+}
+div.main
+{
+	padding:0 10px 2px 10px;
+	width:366px;
+	margin:auto;
+	background-color:#e1e8d3;
+}
+.ab, table.tabl tr td:first-child
+{
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:13px;
+	font-weight:bold;
+}
+table.tabl tr td.hi
+{
+	padding-left:50px;
+}
+table.tabl tr td input.ho
+{
+	border:1px solid #808080;
+}
+div.heading
+{
+	padding:4px;
+	margin:0 -10px 0 -10px;
+	color:#ffffff;
+	font-family:Arial,Helvetica,sans-serif;
+	background-color:#97b065;
+	text-align:center;
+}
+.heading h4
+{
+	margin:0;
+}
+table.tabl
+{
+	padding: 15px 0 10px 0;
+}
+</style>
+<script type="text/javascript">
+function validat()
+{
+
+	var ver = new Array();
+	var i;
+	var b = ["Login Id", "Email", "Name", "Timezone","Home Page","About me"];
+	ver[0]= document.getElementById("loginid");
+	ver[1]= document.getElementById("email");
+	ver[2]= document.getElementById("uname");
+	ver[3]= document.getElementById("timezone");
+	ver[4]= document.getElementById("homepage");
+	ver[5]= document.getElementById("aboutme");
+	ver[6]= document.getElementById("check");
+	for(i=0;i<=5;i++)
+	{
+		if(ver[i].value == '')
+		{
+			alert(b[i]+" field can't be empty");
+		}
+		else if(i == 5 && ver[i].value.length < 50)
+		{
+			alert("Please write minimum of 50 charcters in textarea");
+		}
+	}
+	for(i=0;i<=5;i++)
+	{
+		if(ver[i].value == '')
+		{
+			ver[i].focus();
+			return false;
+		}
+		if(i == 5 && ver[i].value.length < 50)
+		{
+			ver[5].focus();
+			return false;
+		}
+	}
+	var n = confirm("do you want to receive notifications ?")
+	if(n == true)
+	ver[6].checked=true;
+	if(n == false)
+	ver[6].checked=false;
+	var m = confirm("do you want to submit this form");
+	if(m == true)
+	document.forms[0].submit();
+	else
+	return;
+}
+
+</script>
+</head>
+<body style="margin:0px">
+<div class="main">
+		<div class="heading">
+			<h4>Registration Form</h4>
+		</div>
+	<form method="get">
+	<table class="tabl">
+		<tr>
+			<td>Login Id</td>
+			<td class="hi"><input class="ho" type="text" id="loginid" name="login"/></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td class="hi"><input style="background-color:#ffffa3;" class="ho" type="text" id="email" name="email"/></td>
+		</tr>
+		<tr>
+			<td>Name</td>
+			<td class="hi"><input style="background-color:#ffffa3;" class="ho" type="text" id="uname" name="name"/></td>
+		</tr>
+		<tr>
+			<td>Timezone</td>
+			<td class="hi"><select id="timezone" name="timezone" style="width: 130px;background-color:#ffffff;margin-left:2px;border:1px solid #808080;">
+				<option value="gmt">GMT</option>
+				<option value="utc">UTC</option>
+				<option value="adt">ADT</option>
+				<option value="amt">AMT</option>
+				<option value="ist">IST</option></select>
+			</td>
+		</tr>
+		<tr>
+			<td>Home Page</td>
+			<td class="hi"><input class="ho" type="text" id="homepage" name="homepage"/></td>
+		</tr>
+	</table>
+	<span class="ab">About me</span><br/><textarea style="margin:10px 0 10px 0;border:1px solid #808080;" rows="12" cols="43" id="aboutme" name="aboutme"></textarea><br/>
+	<input type="checkbox" name="check" id="check" value="notify"/><span class="ab">Receive notification of comments.</span><br/>
+	<span style="font-size:10px;font-family:Arial,Helvetica,sans-serif;">You will be sent an email when someone posts comments to your Blog or Album.</span>
+	<p>Your password will be mailed to you</p>
+	<p style="margin-top:4px;"><input type="button" name="button" onclick="validat()" value="GO"/></p>
+</form>
+</div>
+</body>
+</html>
+

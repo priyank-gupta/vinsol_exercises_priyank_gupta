@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Selection</title>
+<style type="text/css">
+div.left
+{
+	float:left;
+}
+div.left select,div.right select
+{
+	background-color:#ffffff;
+	width:250px;
+}
+div.center
+{
+	float:left;
+}
+div.right
+{
+	float:left;
+}
+#b1,#b2
+{
+	background-color:#ff7d4d;
+	color:#ffffff;
+}
+div.center
+{
+	padding:15px 30px;
+	text-align:center;
+}
+</style>
+<script type="text/javascript">
+function adding()
+{
+	var i;
+	var left= document.getElementById("firstadd").options;
+	var sright=document.getElementById("secondremove");
+	while(i<left.length)
+	{	
+		if(left[i].selected == true)
+		{
+			left.remove(i);
+			
+		}
+		else
+			i++;
+	}
+}		
+</script>
+</head>
+<body>
+	<div class="left">
+		<select id="firstadd" multiple="multiple" size="5">
+			<option value="denmark">Denmark</option>
+			<option value="djibouti">Djibouti</options>
+			<option value="dominica">Dominica</option>
+			<option value="dominican rep">Dominican Republic</option>
+			<option value="east timor">East Timor</option>
+			<option value="west timor">West Timor</option>
+			<option value="south timor">South Timor</option>
+			<option value="north timor">North Timoe</option>
+		</select>
+	</div>
+	<div class="center">
+		<input type="button" id="b1" value="Add" onclick="adding()"/><br />
+		<input type="button" id="b2" value="Remove" onclick="removing()"/>
+	</div>
+	<div class="right">
+		<select id="secondremove" multiple="multiple" size="5">
+		</select>
+	</div><br style="clear:both"/>
+</body>
+</html>

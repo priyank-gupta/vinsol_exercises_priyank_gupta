@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Name prompt</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+function hi()
+{
+	var clickme = new Function("a" , "if(a!='')alert('Hello '+a);else alert('Error: Byee!!');");
+	var n = prompt("enter your name","");
+	clickme(n);
+}
+</script>
+</head>
+<body>
+<a href="javascript: hi()">click me to execute function</a>
+</body>
+</html>

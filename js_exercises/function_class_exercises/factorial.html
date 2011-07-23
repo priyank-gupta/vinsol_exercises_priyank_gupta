@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>factorial</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+function fact(m)
+{
+	var f=1;
+	n = parseInt(m);
+	for(i=n;i>=1;i--)
+	{
+		f=f*i;
+	}
+	document.getElementById("write").innerHTML = "the factorial of "+ m +" is "+ f;
+}
+</script>
+</head>
+<body>
+<a href="javascript: fact(prompt('enter a number',''))">calculate factorial</a>
+<p id="write"></p>
+</body>
+</html>

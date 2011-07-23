@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>navigator object</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+function loadin()
+{
+	var i;
+	var plug="";
+	alert("Browser Name: "+navigator.appName);
+	alert("Browser Version: "+ navigator.appVersion);
+	alert("Cookie Enabled: "+ navigator.cookieEnabled);
+	alert("Java Enabled: "+ navigator.javaEnabled());
+	alert("Language of Browser: "+ navigator.language);
+	alert("OS: "+ navigator.oscpu);
+	for(i=0;i<navigator.plugins.length;i++)
+	{
+		for(j=0;j<navigator.plugins[i].length;j++)
+		{
+			plug = plug + " , " + navigator.plugins[i][j].description ;
+		}	
+	}
+	alert("Plugins List: "+ plug);
+}
+</script>
+</head>
+<body onload="loadin()">
+</body>
+</html>

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>URL prompt</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+	var url = prompt("Enter a URL",'');
+	if(url == '')
+	{
+		alert("Error: enter URL");
+		prompt("Enter a URL",'');
+	}
+	if(url != null)
+	window.open( url, "new window","height=450px, width=400px,scrollbars=0");		
+</script>
+</head>
+<body>
+</body>
+</html>

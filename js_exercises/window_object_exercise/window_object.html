@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>window open</title>
+<style type="text/css">
+a
+{
+	text-decoration:none;
+	color:#a9a9a9;
+}
+a:hover
+{
+	text-decoration:underline;
+	color:#000000;
+}
+</style>
+<script type="text/javascript">
+function clickon(i)
+{
+	
+	if(i==0)
+	{
+		vinWin = window.open("http://www.vinsol.com", "vinsolWindow" , "left=200,top=200,height=500,width=500,resizable=yes,scrollable=yes,location=yes,toolbar=yes,status=yes");
+	}
+	if(i==1)
+	{
+		vinWin.close();
+	}
+}	
+</script>
+</head>
+<body>
+<a href="javascript: clickon(0)">vinsol website</a><hr />
+<a href="javascript: clickon(1)">close vinsol website</a>
+</body>
+</html>
