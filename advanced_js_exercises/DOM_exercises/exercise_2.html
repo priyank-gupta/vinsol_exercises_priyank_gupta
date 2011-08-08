@@ -1,0 +1,73 @@
+<html>
+<head> 
+<title> CHECKBOX </title>
+<style type="text/css">
+a {
+	color:#000000;
+}
+a:hover {
+	color: #b22222;
+}
+div {
+	background-color:#1e90ff;
+	margin:auto;
+	width:200px;
+}
+h3 {
+	background-color:#a9a9a9;
+	text-align:center;
+}
+</style>
+<script type="text/javascript">
+var days = ["sunday" , "monday" , "wednesday" , "thursday" , "tuesday" , "friday" , "saturday"];
+var checkBox = document.getElementsByTagName("input");
+var c=0;
+var ar = new Array();
+function checkNone() {
+	c=0;
+	if(document.getElementById("none").checked == true) {
+		for(var i = 0; i < checkBox.length-1;i++) {
+		checkBox[i].checked= false;
+		}
+	}
+}
+function count(x) {
+	document.getElementById("none").checked = false;
+	if(document.getElementById("day"+x).checked == true) {
+		if(c<3) {
+			c++;
+		}
+		else {
+			var d=0;
+			document.getElementById("day"+x).checked = false;
+			for(var i=0;i<checkBox.length-1;i++) {
+				if(checkBox[i].checked == true) {
+					ar[d] = checkBox[i].value;
+					d++;
+				}
+			}
+			alert("Only 3 days can be selected. You have already selected " + ar[0]+", "+ar[1]+" and "+ar[2]);
+		}
+	}
+	else {
+		c--;
+	}
+}
+</script>
+</head>
+<body>
+<div>
+<h3> Check Box </h3>
+<form method="get">
+	<input type="checkbox" id="day0" value="Sunday" onclick="count(0)"/><label for="day0">Sunday</label><br /><br />
+	<input type="checkbox" id="day1" value="Monday" onclick="count(1)"/><label for="day1">Monday</label><br /><br />
+	<input type="checkbox" id="day2" value="Wednesday" onclick="count(2)"/><label for="day2">Wednesday</label><br /><br />
+	<input type="checkbox" id="day3" value="Thursday" onclick="count(3)"/><label for="day3">Thursday</label><br /><br />
+	<input type="checkbox" id="day4" value="Tuesday" onclick="count(4)"/><label for="day4">Tuesday</label><br /><br />
+	<input type="checkbox" id="day5" value="Friday" onclick="count(5)"/><label for="day5">Friday</label><br /><br />
+	<input type="checkbox" id="day6" value="Saturday" onclick="count(6)"/><label for="day6">Saturday</label><br /><br />
+	<input type="checkbox" id="none" onclick="checkNone()"/><label for="none">None</label>
+</form>
+</div>
+</body>
+</html>

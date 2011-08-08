@@ -9,11 +9,16 @@ function copy()
 	document.getElementById("text2").value = document.getElementById("text1").value;
 	document.getElementById("text2").disabled = true;
 }
+function copy1()
+{
+	alert('What ever you type in this text field will be copied to textfield_2')
+	document.getElementById("text2").disabled=false;
+}
 </script>
 </head>
 <body>
 <h4>Two text fields</h4>
-Textfield_1:&nbsp;&nbsp;<input type="text" onclick="alert('What ever you type in this text field will be copied to textfield_2')" id="text1" /><br />
+Textfield_1:&nbsp;&nbsp;<input type="text" onclick="copy1()" id="text1" /><br />
 Textfield_2:&nbsp;&nbsp;<input type="text" onclick="copy()" id="text2" />
 </body>
 </html>

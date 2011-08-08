@@ -1,0 +1,49 @@
+<html>
+<head> 
+<title> CHECKBOX </title>
+<style type="text/css">
+a {
+	color:#000000;
+}
+a:hover {
+	color: #b22222;
+}
+div {
+	background-color:#1e90ff;
+	margin:auto;
+	width:200px;
+}
+h3 {
+	background-color:#a9a9a9;
+	text-align:center;
+}
+</style>
+<script type="text/javascript">
+var checkBox = document.getElementsByTagName("input");
+function checkAll() {
+	for(var i = 0; i<=checkBox.length;i++) {
+		checkBox[i].checked="checked";
+	}
+}
+function checkNone() {
+	for(var i = 0; i<=checkBox.length;i++) {
+		checkBox[i].checked=false;
+	}
+}
+</script>
+</head>
+<body>
+<div>
+<h3> Check Box </h3>
+<form method="get">
+	<input type="checkbox" id="red"/><label for="red">Red</label><br /><br />
+	<input type="checkbox" id="green"/><label for="green">Green</label><br /><br />
+	<input type="checkbox" id="yellow"/><label for="yellow">Yellow</label><br /><br />
+	<input type="checkbox" id="white"/><label for="white">White</label><br /><br />
+	<input type="checkbox" id="black"/><label for="black">Black</label><br /><br />
+	<a href="#" onclick="checkAll()">Check All</a>&nbsp;&nbsp;&nbsp;
+	<a href="#" onclick="checkNone()">Check None</a>
+</form>
+</div>
+</body>
+</html>
