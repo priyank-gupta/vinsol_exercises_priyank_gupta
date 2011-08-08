@@ -1,7 +1,6 @@
 
 function saving() {
-	var col = this.parentNode;
-	var ro = col.parentNode;
+	var ro = this.parentNode.parentNode;
 	var cell1 = ro.childNodes[0];
 	var cell2 = ro.childNodes[1];
 	var cell3 = ro.childNodes[2];
@@ -57,19 +56,15 @@ function addRow() {
 	appen(cell1,cell2,cell3);
 }
 function editin() {
-	var di = this.parentNode;
-	var col = di.parentNode;
-	var ro = col.parentNode;
+	var ro = this.parentNode.parentNode.parentNode;
 	var cell1 = ro.childNodes[0];
 	var cell2 = ro.childNodes[1];
 	var cell3 = ro.childNodes[2];
 	appen(cell1,cell2,cell3);
 }
 function deletin() {
-	var di = this.parentNode;
-	var col = di.parentNode;
-	var ro = col.parentNode;
-	var tab = ro.parentNode;
+	var tab = this.parentNode.parentNode.parentNode.parentNode;
+	var ro = this.parentNode.parentNode.parentNode;
 	tab.removeChild(ro);
 }
 
