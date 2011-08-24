@@ -52,64 +52,14 @@ table.tabl
 	padding: 15px 0 10px 0;
 }
 </style>
-<script type="text/javascript">
-function validat()
-{
 
-	var ver = new Array();
-	var i;
-	var b = ["Login Id", "Email", "Name", "Timezone","Home Page","About me"];
-	ver[0]= document.getElementById("loginid");
-	ver[1]= document.getElementById("email");
-	ver[2]= document.getElementById("uname");
-	ver[3]= document.getElementById("timezone");
-	ver[4]= document.getElementById("homepage");
-	ver[5]= document.getElementById("aboutme");
-	ver[6]= document.getElementById("check");
-	for(i=0;i<=5;i++)
-	{
-		if(ver[i].value == '')
-		{
-			alert(b[i]+" field can't be empty");
-		}
-		else if(i == 5 && ver[i].value.length < 50)
-		{
-			alert("Please write minimum of 50 charcters in textarea");
-		}
-	}
-	for(i=0;i<=5;i++)
-	{
-		if(ver[i].value == '')
-		{
-			ver[i].focus();
-			return false;
-		}
-		if(i == 5 && ver[i].value.length < 50)
-		{
-			ver[5].focus();
-			return false;
-		}
-	}
-	var n = confirm("do you want to receive notifications ?")
-	if(n == true)
-	ver[6].checked=true;
-	if(n == false)
-	ver[6].checked=false;
-	var m = confirm("do you want to submit this form");
-	if(m == true)
-	document.forms[0].submit();
-	else
-	return false;
-}
-
-</script>
 </head>
 <body style="margin:0px">
 <div class="main">
 		<div class="heading">
 			<h4>Registration Form</h4>
 		</div>
-	<form method="get" onsubmit="return validat()">
+	<form method="get" onsubmit="return validat()" >
 	<table class="tabl">
 		<tr>
 			<td>Login Id</td>
@@ -145,6 +95,7 @@ function validat()
 	<p style="margin-top:4px;"><input type="submit" name="button" value="GO"/></p>
 </form>
 </div>
+<script type="text/javascript" src="exercise_1.js"></script>
 </body>
 </html>
 

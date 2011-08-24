@@ -1,0 +1,64 @@
+<html>
+<head>
+<title> adv_JS_exercise_4 </title>
+<head>
+<style type="text/css">
+#main {
+	background-color: #a9a9a9;
+	overflow:auto;
+	height:100px;
+	width:200px;
+	margin: auto;
+}
+#colors, #movies, #drinks, #bikes {
+	display: none;
+}
+ul {
+	margin:0px;
+	list-style-type: none;
+}
+#mainlist {
+	padding:0;
+}
+</style>
+</head>
+<body>
+	<div id="main">
+		<ul id="mainlist">
+			<li>
+				<input type="checkbox" value="color" name="color" id="color"/><label for="color">Color</label><br />
+				<ul id="colors">
+					<li><input type="checkbox" value="red" name="red"/><label for="red">Red</label></li>
+					<li><input type="checkbox" value="yellow" name="yellow"/><label for="yellow">Yellow</label></li>
+					<li><input type="checkbox" value="green" name="green"/><label for="green">Green</label></li>
+					<li><input type="checkbox" value="blue" name="blue"/><label for="blue">Blue</label></li>
+				</ul>
+			</li>
+			<li>
+				<input type="checkbox" value="movie" id="movie" name="movie"  /><label for="movie">Movies</label><br />
+				<ul id="movies">
+					<li><input type="checkbox" value="dar" name="dar"/><label for="dar">Dar</label></li>
+					<li><input type="checkbox" value="sir" name="sir"/><label for="sir">Sir</label></li>
+				</ul>
+			</li>
+			<li>
+			<input type="checkbox" value="drink" id="drink" name="drink" /><label for="drink">Drinks</label><br />
+				<ul id="drinks">
+					<li><input type="checkbox" value="coke" name="coke"/><label for="coke">Coke</label></li>
+					<li><input type="checkbox" value="pepsi" name="pepsi"/><label for="pepsi">Pepsi</label></li>
+					<li><input type="checkbox" value="dew" name="dew"/><label for="dew">Dew</label></li>
+				</ul>
+			</li>
+			<li>
+				<input type="checkbox" value="bike" id="bike" name="bike" /><label for="bike">Bikes</label><br />
+				<ul id="bikes">
+					<li><input type="checkbox" value="v-rod" name="v-rod"/><label for="v-rod">V-rod</label></li>
+					<li><input type="checkbox" value="pulsar" name="pulsar"/><label for="pulsar">Pulsar</label></li>
+					<li><input type="checkbox" value="cbz" name="cbz"/><label for="cbz">CBZ</label></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="exercise_4.js"></script>
+</body>
+</html>
