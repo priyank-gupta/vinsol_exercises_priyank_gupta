@@ -1,0 +1,2 @@
+select article_name, comment from comment,(select comment_id, article_name from article_comment,(select article.article_no,article_name from article,(select article_no from user_article where user_id = (select user_id from user where username='sushant')) p where article.article_no = p.article_no) r where article_comment.article_no = r.article_no) q where comment.comment_id = q.comment_id;
+
