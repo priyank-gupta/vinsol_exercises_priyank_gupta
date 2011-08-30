@@ -1,0 +1,10 @@
+Exercise2
+Create a DB named "vtapp", create a db user named 'vtapp_user' and give him permissions to access vtappDB...
+
+Query::
+
+create database vtapp;
+
+create user 'vtapp_user'@'localhost' identified by '';
+grant all privileges on vtapp.* to 'vtapp_user'@'localhost' with grant option;
+

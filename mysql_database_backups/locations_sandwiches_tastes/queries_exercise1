@@ -1,15 +1,15 @@
 
-answer 1::::
-
+Ques 1:: Places where Jones can eat (using a nested subquery).
+Query::
 select lname,phone,address from locations,(select location from sandwiches,(select filling from tastes where name='jones') a where sandwiches.filling = a.filling) b where lname = location;
 
 
-answer 2::::
-
+Ques 2:: Places where Jones can eat (without using a nested subquery).
+Query::
 select lname,phone,address from tastes,sandwiches,locations where name='jones' and tastes.filling = sandwiches.filling and location = lname;
 
 
-answer 3::::
-
+Ques 3:: For each location the number of people who can eat there
+Query::
 select lname,count(distinct name) from locations,sandwiches,tastes where lname = location and tastes.filling = sandwiches.filling group by(lname);
 
