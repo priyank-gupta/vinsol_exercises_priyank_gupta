@@ -1,0 +1,286 @@
+<html>
+<head>
+<title>Question 1</title>
+<style type="text/css">
+div.header
+{
+	width:777px;
+	padding:0px;
+	margin:0;
+	background-color: #808080;
+}
+
+div.header h1
+{
+	float:left;
+}
+
+img.home
+{
+	border: 1px solid #000000;
+	padding:0;
+	margin: 13.5px 0 13.5px 14px;
+	width:270px;
+	height:70px;
+	float:left;
+}
+
+div.mainMenu
+{
+	border: 1px solid #000000;
+	padding:0;
+	margin:8.5px 0 13.5px 0;
+	background-color:#a9a9a9;
+	width: 300px;
+	height: 40px;
+}
+h1.mainHead
+{
+	padding: 0;
+	margin:0;
+}
+
+div.leftSideBar
+{
+	padding:0;
+	margin:25px 8px 0 0;
+	width:186px;
+	float:left;
+	background-color:#808080;
+}
+
+div.leftSideBar p
+{
+	text-align:center;
+	color:#ffffff;
+	font-family:"Trebuchet MS", serif;
+	font-size: 20px;
+}
+
+div.radio
+{
+	border: 1px solid #000000;
+	height:150px;
+	width:120px;
+	margin:35px 28px 0px 38px;
+	background-color:#ffffff;
+}
+div.radio div
+{
+	padding:0;
+	margin:30px 10px;
+}
+
+div.checkBox
+{
+	margin:30px 0 50px 30px;
+}
+
+div.center
+{
+	height:413px;
+	width:415px;
+	float:left;
+	margin:25px 8px 0 0;
+	padding:0;
+	background-color:#808080;
+}
+
+div.tabs table
+{
+	margin: 2px 30px 20px;
+}
+div.tabs table tr td
+{
+	margin:2px;
+	padding: 4px 10px;
+	background-color:#ffffff;
+}
+div.tabs table tr td a
+{
+	color:#000000;
+	text-decoration: none;
+}
+div.tabs table tr td:hover
+{
+	background-color:#a9a9a9;
+}
+
+div.center a.lks
+{
+	color: #000000;
+}
+div.center a.lks:hover
+{
+	color:a9a9a9;
+}
+
+div.table
+{
+	margin:20px 0 0 7px;
+	width:250px;
+	overflow:scroll;
+	height:200px;
+}
+
+div.table table
+{
+	width: 250px;
+	height: 300px;
+	background-color:#ffffff;
+	margin: 0px 0 0 0px;
+	border-collapse:collapse;
+	border: 1px solid #000000;
+}
+div.table table tr td,th
+{
+	border-collapse:collapse;
+	border: 1px solid #000000;
+}
+div.next
+{
+	margin-top:40px;
+}
+
+div.right
+{
+	height:413px;
+	width:159px;
+	float:left;
+	margin:25px 0 0 0;
+	padding:0;
+	background-color:#808080;
+}
+
+div.right div
+{
+	padding:4px 1px 20px 0px;
+	width:135px;
+	margin:10px 0px 0 10px;
+	background-color:#ffffff;
+}
+div.next a
+{
+	text-decoration:none;
+	color:#000000;
+}
+div.next a:hover
+{
+	color:a9a9a9;
+}
+div.banner
+{
+	padding-top:1px;
+	background-color: #808080;
+	height:60px;
+	width:468px;
+	margin:20px 0px 0px 165px;
+	text-align:center;
+}
+</style>
+</head>
+<body>
+	<div class="header">
+		<img src="home-current.png" class="home" />
+		<h1 style="margin:25px 0px 35px 41px"> Header </h1>
+		<div style="float:right;">
+			<form align="center" style="margin:10px 0 0 0 ;" action="newPage.html" method="get">	
+		             <input type="text" name="search" /><input type="submit" value="search"/>
+			</form>
+			<div class="mainMenu">
+				<h1 class="mainHead">Main Menu</h1>
+			</div>
+		</div><br style="clear:both" />
+	</div>
+	<div class="leftSideBar">
+		<div class="radio">
+		    <div>
+			<input type="radio" name="button" /> Button 1<br />
+			<input type="radio" name="button" checked="checked" /> Button 2<br />
+			<input type="radio" name="button" /> Button 3<br />
+			<input type="radio" name="button" /> Button 4<br />
+		    </div>		
+		</div>
+		<p><b>LEFT SIDEBAR</b><br /><span style="font-size:15px">(secondary menu)</span>
+		</p>
+		<div class="checkBox">
+			<input type="checkbox" name="check1" /> Checkbox 1<br />
+			<input type="checkbox" name="check2" checked="checked"/> Checkbox 2<br />
+			<input type="checkbox" name="check3" /> Checkbox 3<br />
+			<input type="checkbox" name="check4" /> Checkbox 4<br />
+		</div>
+	</div>
+	<div class="center">
+		<div class="tabs">
+	            <table><tr>
+			<td><a href="tab1">Tab 1</a></td>
+			<td><a href="tab2">Tab 2</a></td>
+			<td><a href="tab3">Tab 3</a></td>
+			<td><a href="tab4">Tab 4</a></td>
+		    </tr></table>
+		</div>&nbsp;&nbsp;
+		<a class="lks" href="http://www.vinsol.com/">vinsol.com</a><span> > </span>
+		<a class="lks" href="http://www.vinsol.com/about"> about</a><span> > </span>
+		<a class="lks" href="http://www.vinsol.com/content"> content</a><span> > </span>
+		<a class="lks" href="http://www.vinsol.com/blog"> blog</a><span> > </span>
+		<div class="table">
+		    <table>
+			<caption style="background-color:#ffffff; padding: 3px 0px; border:1px outset black;" >Report Title</caption>
+			<tr align="left">
+				<th>Col A</th>
+				<th>Col B</th>
+				<th style="width:150px">Col C</th>
+			</tr>
+			<tr align="left">
+				<td>Data 1</td>
+				<td>12</td>
+				<td style="width:150px">34</td>
+			</tr>
+			<tr align="left">
+				<td>Data 2</td>
+				<td>18</td>
+				<td style="width:150px">39</td>
+			</tr>
+			<tr align="left" >
+				<td>Data 3</td>
+				<td>65</td>
+				<td style="width:150px">83</td>
+			</tr>
+			<tr></tr><tr></tr><tr></tr>
+			<tr></tr><tr></tr>
+			<tr></tr><tr></tr>
+			<tr></tr><tr></tr>
+			<tr></tr><tr></tr>
+			<tr></tr><tr></tr>
+			<tr></tr<tr></tr><tr></tr>
+			<tr></tr>
+		    </table>
+		</div>
+		<p align="center" style="font-size:20px; color:#ffffff;position:relative;"><b>MAIN CONTENT<b><br /><span style="font-size:15px">(about/tv last night)</span></p>
+		<div class="next">
+			<p style="color:#000000;text-align:center;"> <a href="">&#60;&#60;</a><a href=""> Prev</a><a href=""> 1</a><a href=""> 2</a><a href=""> 3</a><a href=""> 4</a><a href=""> 5</a><a href=""> 6</a><a href=""> 7</a><a href=""> 8</a><a href=""> 9</a><a href=""> 10</a> <a href=""> Next</a> <a href="">&#62;&#62;</a></p>
+		</div>
+	</div>
+	<div class="right">
+		<select  name="choice" style="margin:35px 0 5px 20px">
+			<option value="category">Categories</option>
+			<option value="catego">Categor</option>
+			<option value="caty">Categori</option>
+			<option value="cate">Cat</option>
+		</select>
+		<div class="list">
+			<ul>
+				<li>item 1</li>
+					<ul type="disc">
+						<li>child 1</li>
+					</ul>
+				<li>item 2</li>
+				<li>item 3</li>
+			</ul>
+		</div>
+		<p style="color:#ffffff;font-size:18px;text-align:center;"><b>RIGHT SIDEBAR</b><br /><span style="font-size:14px">(schedule/login)</span></p>
+	</div><br style="clear:both" />
+	<div class="banner">
+	<p>Banner<br />468x60</p>
+	</div>
+</body>
