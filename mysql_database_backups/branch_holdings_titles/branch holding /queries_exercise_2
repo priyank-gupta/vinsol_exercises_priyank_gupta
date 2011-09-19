@@ -1,0 +1,19 @@
+
+Ques 1:: The names of all library books published by Macmillan.
+Query::
+select title from titles where publisher = 'macmillan';
+
+
+Ques 2:: Branches that hold any books by Ann Brown (using a nested subquery).
+Query::
+select distinct bcode, librarian, address from branch,(select branch from holdings,(select title from titles where author = 'ann brown') a where holdings.title = a.title) b where bcode = branch;
+
+
+Ques 3:: Branches that hold any books by Ann Brown (without using a nested subquery).
+Query::
+select distinct bcode,librarian,address from branch,titles,holdings where author = 'ann brown' and bcode=branch and titles.title = holdings.title;
+
+
+Ques 4:: The total number of books held at each branch.
+Query::
+select branch,librarian,address,sum(copies) from holdings,branch where branch = bcode group by(branch);
