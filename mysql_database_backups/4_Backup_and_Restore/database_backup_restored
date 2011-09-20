@@ -1,0 +1,74 @@
+mysql> use exercise3
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_exercise3 |
++---------------------+
+| articles            |
+| categories          |
+| comments            |
+| users               |
++---------------------+
+4 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+priyank@priyank-Studio-XPS-1640:~$ mysqldump -upriyank -p exercise3 > backup_exercise.sql
+Enter password: 
+priyank@priyank-Studio-XPS-1640:~$ mysql -upriyank -p restored < backup_exercise.sql
+Enter password: 
+priyank@priyank-Studio-XPS-1640:~$ mysql -upriyank -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 384
+Server version: 5.1.54-1ubuntu4 (Ubuntu)
+
+Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.
+This software comes with ABSOLUTELY NO WARRANTY. This is free software,
+and you are welcome to modify and redistribute it under the GPL v2 license
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| cookbook           |
+| exercise1          |
+| exercise2          |
+| exercise3          |
+| mysql              |
+| phpmyadmin         |
+| phptesting         |
+| restored           |
+| usr_ratings        |
+| vtapp              |
+| vtapp1             |
+| vtapp2             |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use restored;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> show tables;
++--------------------+
+| Tables_in_restored |
++--------------------+
+| articles           |
+| categories         |
+| comments           |
+| users              |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+

@@ -1,0 +1,312 @@
+mysql> create table users (id int primary key auto_increment, type varchar(255) not null);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> create table articles(id int primary key auto_increment, content varchar(255) not null, user_id int not null, category_id int not null, foreign key(user_id) references users(id));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> create table category(id int primary key auto_increment, name varchar(255) not null);
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> alter table category rename to categories;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> alter table articles add constraint foreign key(category_id) references categories(id);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table comment (id int primary key auto_increment, article_id int not null, user_posting_id int not null, body varchar(255), foreign key(article_id) references articles(id), foreign key (user_posting_id) references users(id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc users;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| type  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc articles;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| content     | varchar(255) | NO   |     | NULL    |                |
+| user_id     | int(11)      | NO   | MUL | NULL    |                |
+| category_id | int(11)      | NO   | MUL | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc categories;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table comment rename to comments;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc comments;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| article_id      | int(11)      | NO   | MUL | NULL    |                |
+| user_posting_id | int(11)      | NO   | MUL | NULL    |                |
+| body            | varchar(255) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table comments change body body varchar(255) not null;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc comments;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| article_id      | int(11)      | NO   | MUL | NULL    |                |
+| user_posting_id | int(11)      | NO   | MUL | NULL    |                |
+| body            | varchar(255) | NO   |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_exercise3 |
++---------------------+
+| articles            |
+| categories          |
+| comments            |
+| users               |
++---------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into user (type) values('normal');
+ERROR 1146 (42S02): Table 'exercise3.user' doesn't exist
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users (type) values('normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * fro users;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fro users' at line 1
+mysql> select * from users;
++----+--------+
+| id | type   |
++----+--------+
+|  1 | normal |
+|  2 | normal |
+|  3 | normal |
+|  4 | admin  |
+|  5 | admin  |
+|  6 | normal |
+|  7 | normal |
+|  8 | admin  |
+|  9 | normal |
++----+--------+
+9 rows in set (0.00 sec)
+
+mysql> insert into category (name) values('ME');
+ERROR 1146 (42S02): Table 'exercise3.category' doesn't exist
+mysql> insert into categories (name) values('ME');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categories (name) values('CSE');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categories (name) values('EEE');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into categories (name) values('IT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hey',2,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hi',1,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hello',1,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hello',3,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hello',5,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hello',4,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('hello',8,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from articles;
++----+---------+---------+-------------+
+| id | content | user_id | category_id |
++----+---------+---------+-------------+
+|  1 | hey     |       2 |           2 |
+|  2 | hi      |       1 |           2 |
+|  3 | hello   |       1 |           4 |
+|  4 | hello   |       3 |           4 |
+|  5 | hello   |       5 |           2 |
+|  6 | hello   |       4 |           2 |
+|  7 | hello   |       8 |           3 |
++----+---------+---------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into comment (article_id, user_posting_id, body) values (3,4,'nice');
+ERROR 1146 (42S02): Table 'exercise3.comment' doesn't exist
+mysql> insert into comments (article_id, user_posting_id, body) values (3,4,'nice');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (6,7,'welldone');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (1,4,'awesome');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (7,8,'cool');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from comments;
++----+------------+-----------------+----------+
+| id | article_id | user_posting_id | body     |
++----+------------+-----------------+----------+
+|  1 |          3 |               4 | nice     |
+|  2 |          6 |               7 | welldone |
+|  3 |          1 |               4 | awesome  |
+|  4 |          7 |               8 | cool     |
++----+------------+-----------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (6,2,'welldone');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from comments;
++----+------------+-----------------+----------+
+| id | article_id | user_posting_id | body     |
++----+------------+-----------------+----------+
+|  1 |          3 |               4 | nice     |
+|  2 |          6 |               7 | welldone |
+|  3 |          1 |               4 | awesome  |
+|  4 |          7 |               8 | cool     |
+|  5 |          6 |               2 | welldone |
++----+------------+-----------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select content, body from (select content, id from articles where user_id=3) p,comments where p.id = article_id;
+Empty set (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('i m gud',3,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into articles (content, user_id, category_id) values ('this is amazaing',3,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from articles;
++----+------------------+---------+-------------+
+| id | content          | user_id | category_id |
++----+------------------+---------+-------------+
+|  1 | hey              |       2 |           2 |
+|  2 | hi               |       1 |           2 |
+|  3 | hello            |       1 |           4 |
+|  4 | hello            |       3 |           4 |
+|  5 | hello            |       5 |           2 |
+|  6 | hello            |       4 |           2 |
+|  7 | hello            |       8 |           3 |
+|  8 | i m gud          |       3 |           1 |
+|  9 | this is amazaing |       3 |           2 |
++----+------------------+---------+-------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from comments;
++----+------------+-----------------+----------+
+| id | article_id | user_posting_id | body     |
++----+------------+-----------------+----------+
+|  1 |          3 |               4 | nice     |
+|  2 |          6 |               7 | welldone |
+|  3 |          1 |               4 | awesome  |
+|  4 |          7 |               8 | cool     |
+|  5 |          6 |               2 | welldone |
++----+------------+-----------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (4,6,'ohooooo');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (8,3,'wackaaaa');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (9,7,'lovley');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments (article_id, user_posting_id, body) values (4,7,'kya baat hai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from comments;
++----+------------+-----------------+--------------+
+| id | article_id | user_posting_id | body         |
++----+------------+-----------------+--------------+
+|  1 |          3 |               4 | nice         |
+|  2 |          6 |               7 | welldone     |
+|  3 |          1 |               4 | awesome      |
+|  4 |          7 |               8 | cool         |
+|  5 |          6 |               2 | welldone     |
+|  6 |          4 |               6 | ohooooo      |
+|  7 |          8 |               3 | wackaaaa     |
+|  8 |          9 |               7 | lovley       |
+|  9 |          4 |               7 | kya baat hai |
++----+------------+-----------------+--------------+
+9 rows in set (0.00 sec)
+
+mysql> select content, body from (select content, id from articles where user_id=3) p,comments where p.id = article_id;
++------------------+--------------+
+| content          | body         |
++------------------+--------------+
+| hello            | ohooooo      |
+| i m gud          | wackaaaa     |
+| this is amazaing | lovley       |
+| hello            | kya baat hai |
++------------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> select user_id,content, body from (select user_id,content, id from articles where user_id=3) p,comments where p.id = article_id;
++---------+------------------+--------------+
+| user_id | content          | body         |
++---------+------------------+--------------+
+|       3 | hello            | ohooooo      |
+|       3 | i m gud          | wackaaaa     |
+|       3 | this is amazaing | lovley       |
+|       3 | hello            | kya baat hai |
++---------+------------------+--------------+
+4 rows in set (0.00 sec)
+
