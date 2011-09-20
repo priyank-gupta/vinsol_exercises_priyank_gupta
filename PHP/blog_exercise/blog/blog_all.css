@@ -1,0 +1,36 @@
+
+#main {
+	background-color: #1d1d1d;
+	margin:0;
+}
+#main > div {
+	margin:auto;
+	width:75%;
+	height:100%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-image:url('/blog/pictures/front-image.jpg');
+}
+h1 {
+	font-style: italic;
+	font-size: 40px;
+	margin:0 0 0 70px;
+	padding-top: 20px;
+}
+fieldset {
+	margin-top: 75px;
+	border: 2px solid #7e1d1d;
+}
+a,span#waste {
+	color: a96868;
+	text-decoration: none;
+} 
+a:hover,span#waste:hover {
+	color: 8d3636;
+}
+label,legend {
+	color: #a96868;
+}
+br {
+	clear:both;
+}
