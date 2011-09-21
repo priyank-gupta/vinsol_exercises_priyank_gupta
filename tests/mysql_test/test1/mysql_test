@@ -1,0 +1,764 @@
+
+mysql> create database vtapp;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create user 'vtapp_user'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> grant usage on vtapp.* for 'vtapp_user'@'localhost' with grant option;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'for 'vtapp_user'@'localhost' with grant option' at line 1
+
+mysql> use vtapp;
+Database changed
+
+mysql> create table cinemas (id int primary key auto_increment, name varchar(128) not null, email varchar(64) not null, website varchar(128), created_at datetime now(), updated_at timestamp now());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now(), updated_at timestamp now())' at line 1
+
+after correction
+
+mysql> show tables;
++-----------------+
+| Tables_in_vtapp |
++-----------------+
+| cinemas         |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> desc cinemas;
++------------+--------------+------+-----+---------------------+----------------+
+| Field      | Type         | Null | Key | Default             | Extra          |
++------------+--------------+------+-----+---------------------+----------------+
+| id         | int(11)      | NO   | PRI | NULL                | auto_increment |
+| name       | varchar(128) | NO   |     | NULL                |                |
+| email      | varchar(64)  | NO   |     | NULL                |                |
+| website    | varchar(128) | YES  |     | NULL                |                |
+| created_at | timestamp    | NO   |     | CURRENT_TIMESTAMP   |                |
+| updated_at | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
++------------+--------------+------+-----+---------------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into cinemas(name, email, website) values ('PVR Saket','saket@pvr.com','www.pvr.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinemas(name, email, website) values ('PVR Rivoli','rivoli@pvr.com','www.pvr.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinemas(name, email, website) values ('Chanakya','chanakyacinema@mailinator.com');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+
+after correction
+
+mysql> insert into cinemas(name, email) values ('Chanakya','chanakyacinema@mailinator.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from cinemas;
++----+------------+-------------------------------+-------------+---------------------+---------------------+
+| id | name       | email                         | website     | created_at          | updated_at          |
++----+------------+-------------------------------+-------------+---------------------+---------------------+
+|  1 | PVR Saket  | saket@pvr.com                 | www.pvr.com | 2011-09-20 19:45:26 | 0000-00-00 00:00:00 |
+|  2 | PVR Rivoli | rivoli@pvr.com                | www.pvr.com | 2011-09-20 19:46:03 | 0000-00-00 00:00:00 |
+|  3 | Chanakya   | chanakyacinema@mailinator.com | NULL        | 2011-09-20 19:47:07 | 0000-00-00 00:00:00 |
++----+------------+-------------------------------+-------------+---------------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cinemas(name, email, website) values ('Om Cine Plex','omcineplex@mailinator.com','omcineplex.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinemas(name, email, website) values ('IMAX','imax@imax.com','imax.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinemas(name, email) values ('Shakuntalam','shakuntalam@pragatimaidan.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from cinemas;
++----+--------------+-------------------------------+----------------+---------------------+---------------------+
+| id | name         | email                         | website        | created_at          | updated_at          |
++----+--------------+-------------------------------+----------------+---------------------+---------------------+
+|  1 | PVR Saket    | saket@pvr.com                 | www.pvr.com    | 2011-09-20 19:45:26 | 0000-00-00 00:00:00 |
+|  2 | PVR Rivoli   | rivoli@pvr.com                | www.pvr.com    | 2011-09-20 19:46:03 | 0000-00-00 00:00:00 |
+|  3 | Chanakya     | chanakyacinema@mailinator.com | NULL           | 2011-09-20 19:47:07 | 0000-00-00 00:00:00 |
+|  4 | Om Cine Plex | omcineplex@mailinator.com     | omcineplex.com | 2011-09-20 19:48:56 | 0000-00-00 00:00:00 |
+|  5 | IMAX         | imax@imax.com                 | imax.com       | 2011-09-20 19:49:31 | 0000-00-00 00:00:00 |
+|  6 | Shakuntalam  | shakuntalam@pragatimaidan.com | NULL           | 2011-09-20 19:50:26 | 0000-00-00 00:00:00 |
++----+--------------+-------------------------------+----------------+---------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table movies (id int primary key auto_increment, name varchar(128) not null, language varchar(32) not null, starcast varchar(128), created_at datetime now(), updated_at timestamp now());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now(), updated_at timestamp now())' at line 1
+
+after correction
+
+mysql> desc movies;
++------------+--------------+------+-----+---------------------+----------------+
+| Field      | Type         | Null | Key | Default             | Extra          |
++------------+--------------+------+-----+---------------------+----------------+
+| id         | int(11)      | NO   | PRI | NULL                | auto_increment |
+| name       | varchar(128) | NO   |     | NULL                |                |
+| language   | varchar(32)  | NO   |     | NULL                |                |
+| starcast   | varchar(128) | YES  |     | NULL                |                |
+| created_at | timestamp    | NO   |     | CURRENT_TIMESTAMP   |                |
+| updated_at | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
++------------+--------------+------+-----+---------------------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Kung Fu Panda 2','English','"Jack Black, Jackie Chan, Lucy Liu"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Kung Fu Panda 2','Hindi','"Jack Black, Jackie Chan, Lucy Liu"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Kung Fu Panda','Hindi','"Jack Black, Jackie Chan, Lucy Liu"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language) values ('I Am Kalam','Hindi');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Rango','Hindi','"Johnny Depp"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Megamind','Hindi','"Brad Pitt"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('Aarakshan','Hindi','"Saif Ali Khan, Amitabh Bachan"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movies(name, language, starcast) values ('The Matrix','English','"Keanu Reeves, Laurence Fishburne"');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from movies;
++----+-----------------+----------+-------------------------------------+---------------------+---------------------+
+| id | name            | language | starcast                            | created_at          | updated_at          |
++----+-----------------+----------+-------------------------------------+---------------------+---------------------+
+|  1 | Kung Fu Panda 2 | English  | "Jack Black, Jackie Chan, Lucy Liu" | 2011-09-21 11:16:33 | 0000-00-00 00:00:00 |
+|  2 | Kung Fu Panda 2 | Hindi    | "Jack Black, Jackie Chan, Lucy Liu" | 2011-09-21 11:16:48 | 0000-00-00 00:00:00 |
+|  3 | Kung Fu Panda   | Hindi    | "Jack Black, Jackie Chan, Lucy Liu" | 2011-09-21 11:17:01 | 0000-00-00 00:00:00 |
+|  4 | I Am Kalam      | Hindi    | NULL                                | 2011-09-21 11:17:27 | 0000-00-00 00:00:00 |
+|  5 | Rango           | Hindi    | "Johnny Depp"                       | 2011-09-21 11:17:58 | 0000-00-00 00:00:00 |
+|  6 | Megamind        | Hindi    | "Brad Pitt"                         | 2011-09-21 11:18:25 | 0000-00-00 00:00:00 |
+|  7 | Aarakshan       | Hindi    | "Saif Ali Khan, Amitabh Bachan"     | 2011-09-21 11:19:04 | 0000-00-00 00:00:00 |
+|  8 | The Matrix      | English  | "Keanu Reeves, Laurence Fishburne"  | 2011-09-21 11:19:54 | 0000-00-00 00:00:00 |
++----+-----------------+----------+-------------------------------------+---------------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table cinema_movies (id int primary key auto_increment, cinema_id int not null, movie_id int not null, start_date date, end_date date, foreign key(cinema_id) references cinemas(id), foreign key(movie_id) references movies(id));
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> desc cinema_movies;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| cinema_id  | int(11) | NO   | MUL | NULL    |                |
+| movie_id   | int(11) | NO   | MUL | NULL    |                |
+| start_date | date    | YES  |     | NULL    |                |
+| end_date   | date    | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(1,1,"2011-09-05","2011-09-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(1,2,"2011-09-06","2011-09-23");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(1,5,"2011-08-31","2011-09-30");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(2,1,"2011-09-02","2011-09-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(2,3,"2011-09-06","2011-09-10");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(2,5,"2011-08-31","2011-09-30");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(3,4,"2011-10-02","2011-10-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(3,7,"2011-09-06","2011-10-22");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(3,6,"2011-09-08","2011-09-18");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(4,8,"2011-10-02","2011-10-10");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(4,4,"2011-10-02","2011-10-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(4,7,"2011-09-06","2011-10-22");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(5,8,"2011-10-05","2011-10-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(5,6,"2011-10-05","2011-10-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cinema_movies(cinema_id, movie_id, start_date, end_date) values(5,5,"2011-10-05","2011-10-20");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from cinema_movies;
++----+-----------+----------+------------+------------+
+| id | cinema_id | movie_id | start_date | end_date   |
++----+-----------+----------+------------+------------+
+|  1 |         1 |        1 | 2011-09-05 | 2011-09-20 |
+|  2 |         1 |        2 | 2011-09-06 | 2011-09-23 |
+|  3 |         1 |        5 | 2011-08-31 | 2011-09-30 |
+|  4 |         2 |        1 | 2011-09-02 | 2011-09-20 |
+|  5 |         2 |        3 | 2011-09-06 | 2011-09-10 |
+|  6 |         2 |        5 | 2011-08-31 | 2011-09-30 |
+|  7 |         3 |        4 | 2011-10-02 | 2011-10-20 |
+|  8 |         3 |        7 | 2011-09-06 | 2011-10-22 |
+|  9 |         3 |        6 | 2011-09-08 | 2011-09-18 |
+| 10 |         4 |        8 | 2011-10-02 | 2011-10-10 |
+| 11 |         4 |        4 | 2011-10-02 | 2011-10-20 |
+| 12 |         4 |        7 | 2011-09-06 | 2011-10-22 |
+| 13 |         5 |        8 | 2011-10-05 | 2011-10-20 |
+| 14 |         5 |        6 | 2011-10-05 | 2011-10-20 |
+| 15 |         5 |        5 | 2011-10-05 | 2011-10-20 |
++----+-----------+----------+------------+------------+
+15 rows in set (0.00 sec)
+
+mysql> create table movie_shows(id int not null auto_increment, cinema_movie_id int not null, start_time  time, end_time time, foreign key(cinema_movie_id) references cinema_movies(id));
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+
+after correction
+
+mysql> create table movie_shows(id int primary key auto_increment, cinema_movie_id int not null, start_time  time, end_time time, foreign key(cinema_movie_id) references cinema_movies(id));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> desc movie_shows;
++-----------------+---------+------+-----+---------+----------------+
+| Field           | Type    | Null | Key | Default | Extra          |
++-----------------+---------+------+-----+---------+----------------+
+| id              | int(11) | NO   | PRI | NULL    | auto_increment |
+| cinema_movie_id | int(11) | NO   | MUL | NULL    |                |
+| start_time      | time    | YES  |     | NULL    |                |
+| end_time        | time    | YES  |     | NULL    |                |
++-----------------+---------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (1,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (1,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (1,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (1,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (1,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (2,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (2,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (2,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (2,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (2,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (3,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (3,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (3,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (3,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (3,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (4,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (4,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (4,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (4,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (4,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (5,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (5,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (5,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (5,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (5,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (6,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (6,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (6,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (6,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (6,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (7,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (7,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (7,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (7,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (7,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (8,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (8,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (8,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (8,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (8,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (9,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (9,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (9,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (9,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (9,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (10,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (10,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (10,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (10,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (10,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (11,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (11,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (11,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (11,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (11,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (12,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (12,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (12,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (12,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (12,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (13,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (13,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (13,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (13,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (13,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (14,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (14,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (14,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (14,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (14,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (15,"09:00:00", "10:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (15,"11:00:00", "12:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (15,"13:00:00", "14:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (15,"16:00:00", "17:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into movie_shows(cinema_movie_id, start_time, end_time) values (15,"19:00:00", "20:00:00");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from movie_shows;
++----+-----------------+------------+----------+
+| id | cinema_movie_id | start_time | end_time |
++----+-----------------+------------+----------+
+|  1 |               1 | 09:00:00   | 10:00:00 |
+|  2 |               1 | 11:00:00   | 12:00:00 |
+|  3 |               1 | 13:00:00   | 14:00:00 |
+|  4 |               1 | 16:00:00   | 17:00:00 |
+|  5 |               1 | 19:00:00   | 20:00:00 |
+|  6 |               2 | 09:00:00   | 10:00:00 |
+|  7 |               2 | 11:00:00   | 12:00:00 |
+|  8 |               2 | 13:00:00   | 14:00:00 |
+|  9 |               2 | 16:00:00   | 17:00:00 |
+| 10 |               2 | 19:00:00   | 20:00:00 |
+| 11 |               3 | 09:00:00   | 10:00:00 |
+| 12 |               3 | 11:00:00   | 12:00:00 |
+| 13 |               3 | 13:00:00   | 14:00:00 |
+| 14 |               3 | 16:00:00   | 17:00:00 |
+| 15 |               3 | 19:00:00   | 20:00:00 |
+| 16 |               4 | 09:00:00   | 10:00:00 |
+| 17 |               4 | 11:00:00   | 12:00:00 |
+| 18 |               4 | 13:00:00   | 14:00:00 |
+| 19 |               4 | 16:00:00   | 17:00:00 |
+| 20 |               4 | 19:00:00   | 20:00:00 |
+| 21 |               5 | 09:00:00   | 10:00:00 |
+| 22 |               5 | 11:00:00   | 12:00:00 |
+| 23 |               5 | 13:00:00   | 14:00:00 |
+| 24 |               5 | 16:00:00   | 17:00:00 |
+| 25 |               5 | 19:00:00   | 20:00:00 |
+| 26 |               6 | 09:00:00   | 10:00:00 |
+| 27 |               6 | 11:00:00   | 12:00:00 |
+| 28 |               6 | 13:00:00   | 14:00:00 |
+| 29 |               6 | 16:00:00   | 17:00:00 |
+| 30 |               6 | 19:00:00   | 20:00:00 |
+| 31 |               7 | 09:00:00   | 10:00:00 |
+| 32 |               7 | 11:00:00   | 12:00:00 |
+| 33 |               7 | 13:00:00   | 14:00:00 |
+| 34 |               7 | 16:00:00   | 17:00:00 |
+| 35 |               7 | 19:00:00   | 20:00:00 |
+| 36 |               8 | 09:00:00   | 10:00:00 |
+| 37 |               8 | 11:00:00   | 12:00:00 |
+| 38 |               8 | 13:00:00   | 14:00:00 |
+| 39 |               8 | 16:00:00   | 17:00:00 |
+| 40 |               8 | 19:00:00   | 20:00:00 |
+| 41 |               9 | 09:00:00   | 10:00:00 |
+| 42 |               9 | 11:00:00   | 12:00:00 |
+| 43 |               9 | 13:00:00   | 14:00:00 |
+| 44 |               9 | 16:00:00   | 17:00:00 |
+| 45 |               9 | 19:00:00   | 20:00:00 |
+| 46 |              10 | 09:00:00   | 10:00:00 |
+| 47 |              10 | 11:00:00   | 12:00:00 |
+| 48 |              10 | 13:00:00   | 14:00:00 |
+| 49 |              10 | 16:00:00   | 17:00:00 |
+| 50 |              10 | 19:00:00   | 20:00:00 |
+| 51 |              11 | 09:00:00   | 10:00:00 |
+| 52 |              11 | 11:00:00   | 12:00:00 |
+| 53 |              11 | 13:00:00   | 14:00:00 |
+| 54 |              11 | 16:00:00   | 17:00:00 |
+| 55 |              11 | 19:00:00   | 20:00:00 |
+| 56 |              12 | 09:00:00   | 10:00:00 |
+| 57 |              12 | 11:00:00   | 12:00:00 |
+| 58 |              12 | 13:00:00   | 14:00:00 |
+| 59 |              12 | 16:00:00   | 17:00:00 |
+| 60 |              12 | 19:00:00   | 20:00:00 |
+| 61 |              13 | 09:00:00   | 10:00:00 |
+| 62 |              13 | 11:00:00   | 12:00:00 |
+| 63 |              13 | 13:00:00   | 14:00:00 |
+| 64 |              13 | 16:00:00   | 17:00:00 |
+| 65 |              13 | 19:00:00   | 20:00:00 |
+| 66 |              14 | 09:00:00   | 10:00:00 |
+| 67 |              14 | 11:00:00   | 12:00:00 |
+| 68 |              14 | 13:00:00   | 14:00:00 |
+| 69 |              14 | 16:00:00   | 17:00:00 |
+| 70 |              14 | 19:00:00   | 20:00:00 |
+| 71 |              15 | 09:00:00   | 10:00:00 |
+| 72 |              15 | 11:00:00   | 12:00:00 |
+| 73 |              15 | 13:00:00   | 14:00:00 |
+| 74 |              15 | 16:00:00   | 17:00:00 |
+| 75 |              15 | 19:00:00   | 20:00:00 |
++----+-----------------+------------+----------+
+75 rows in set (0.00 sec)
+
+mysql> 
+
+Question 2 
+
+A)
+mysql> select start_time, end_time from (select cinema_movies.id from cinemas, movies, cinema_movies where cinemas.name = 'PVR Saket' and movies.name = 'Kung Fu Panda 2' and cinemas.id = cinema_id and movies.id = movie_id) a, movie_shows where cinema_movies.id = cinema_movie_id;
+ERROR 1054 (42S22): Unknown column 'cinema_movies.id' in 'where clause'
+
+after correction
+
+mysql> select start_time, end_time from (select cinema_movies.id from cinemas, movies, cinema_movies where cinemas.name = 'PVR Saket' and movies.name = 'Kung Fu Panda 2' and cinemas.id = cinema_id and movies.id = movie_id) a, movie_shows where a.id = cinema_movie_id;
++------------+----------+
+| start_time | end_time |
++------------+----------+
+| 09:00:00   | 10:00:00 |
+| 11:00:00   | 12:00:00 |
+| 13:00:00   | 14:00:00 |
+| 16:00:00   | 17:00:00 |
+| 19:00:00   | 20:00:00 |
+| 09:00:00   | 10:00:00 |
+| 11:00:00   | 12:00:00 |
+| 13:00:00   | 14:00:00 |
+| 16:00:00   | 17:00:00 |
+| 19:00:00   | 20:00:00 |
++------------+----------+
+10 rows in set (0.00 sec)
+
+B)
+mysql> select "name.language" from movies;
++---------------+
+| name.language |
++---------------+
+| name.language |
+| name.language |
+| name.language |
+| name.language |
+| name.language |
+| name.language |
+| name.language |
+| name.language |
++---------------+
+8 rows in set (0.00 sec)
+
+after correction
+
+mysql> select concat(name,"(",language,")") from movies;
++-------------------------------+
+| concat(name,"(",language,")") |
++-------------------------------+
+| Kung Fu Panda 2(English)      |
+| Kung Fu Panda 2(Hindi)        |
+| Kung Fu Panda(Hindi)          |
+| I Am Kalam(Hindi)             |
+| Rango(Hindi)                  |
+| Megamind(Hindi)               |
+| Aarakshan(Hindi)              |
+| The Matrix(English)           |
++-------------------------------+
+8 rows in set (0.00 sec)
+
+C)
+
+D)
+mysql> select cinemas.name from cinemas, movies, cinema_movies where start_date <= '2011-09-15' and end_date >= '2011-09-15' and movies.name = 'Rango' and cinemas.id = cinema_id and movies.id = movie_id;
++------------+
+| name       |
++------------+
+| PVR Saket  |
+| PVR Rivoli |
++------------+
+2 rows in set (0.00 sec)
+
+E)
+mysql> select movies.name from movies, cinema_movies where movies.id = movie_id and start_date > now();
++------------+
+| name       |
++------------+
+| I Am Kalam |
+| The Matrix |
+| I Am Kalam |
+| The Matrix |
+| Megamind   |
+| Rango      |
++------------+
+6 rows in set (0.00 sec)
+
+F)
+mysql> select cinemas.name from cinemas,cinema_movies where cinemas.id = cinema_id and start_date > now();
++--------------+
+| name         |
++--------------+
+| Chanakya     |
+| Om Cine Plex |
+| Om Cine Plex |
+| IMAX         |
+| IMAX         |
+| IMAX         |
++--------------+
+6 rows in set (0.00 sec)
+
+G)
+
+H)
+select max(count(cinema_id)), name from movies, cinema_movies where movies.id = movie_id group by (movie_id);
+ERROR 1111 (HY000): Invalid use of group function
+
+I)
+select name from cinemas, cinema_movies where cinemas.id = cinema_id having max(count(movie_id)) group by (listing_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by (listing_id)' at line 1
+
+J)
+mysql> select name from movies having count(language) >1 group by name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by name' at line 1
+
+K)
+
+L)
+
+question 3
+
+A)
+mysql> alter table cinemas rename to listings;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> alter table cinema_movies rename to listing_movies;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> alter table movie_shows change cinema_movie_id listing_movie_id int not null;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc listings;
++------------+--------------+------+-----+---------------------+----------------+
+| Field      | Type         | Null | Key | Default             | Extra          |
++------------+--------------+------+-----+---------------------+----------------+
+| id         | int(11)      | NO   | PRI | NULL                | auto_increment |
+| name       | varchar(128) | NO   |     | NULL                |                |
+| email      | varchar(64)  | NO   |     | NULL                |                |
+| website    | varchar(128) | YES  |     | NULL                |                |
+| created_at | timestamp    | NO   |     | CURRENT_TIMESTAMP   |                |
+| updated_at | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
++------------+--------------+------+-----+---------------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc listing_movies;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| cinema_id  | int(11) | NO   | MUL | NULL    |                |
+| movie_id   | int(11) | NO   | MUL | NULL    |                |
+| start_date | date    | YES  |     | NULL    |                |
+| end_date   | date    | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table movie_shows drop foreign key cinema_movie_id;
+Query OK, 75 rows affected (0.08 sec)
+Records: 75  Duplicates: 0  Warnings: 0
+
+mysql> alter table movie_shows add constraint foreign key(listing_movie_id) references listing_movies(id);
+Query OK, 75 rows affected (0.08 sec)
+Records: 75  Duplicates: 0  Warnings: 0
+
+mysql> desc movie_shows;
++------------------+---------+------+-----+---------+----------------+
+| Field            | Type    | Null | Key | Default | Extra          |
++------------------+---------+------+-----+---------+----------------+
+| id               | int(11) | NO   | PRI | NULL    | auto_increment |
+| listing_movie_id | int(11) | NO   | MUL | NULL    |                |
+| start_time       | time    | YES  |     | NULL    |                |
+| end_time         | time    | YES  |     | NULL    |                |
++------------------+---------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table listing_movies change cinema_id listing_id int not null;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc listing_movies;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| listing_id | int(11) | NO   | MUL | NULL    |                |
+| movie_id   | int(11) | NO   | MUL | NULL    |                |
+| start_date | date    | YES  |     | NULL    |                |
+| end_date   | date    | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table listing_movies drop foreign key cinema_id;
+Query OK, 15 rows affected (0.08 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> alter table listing_movies add constraint foreign key(listing_id) references listings(id);
+Query OK, 15 rows affected (0.10 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> desc listing_movies;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| listing_id | int(11) | NO   | MUL | NULL    |                |
+| movie_id   | int(11) | NO   | MUL | NULL    |                |
+| start_date | date    | YES  |     | NULL    |                |
+| end_date   | date    | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+B)
+
+
