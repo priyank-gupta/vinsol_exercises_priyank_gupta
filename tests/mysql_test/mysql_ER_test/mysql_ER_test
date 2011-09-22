@@ -1,0 +1,423 @@
+mysql> create table user(id int primary key auto_increment, name varchar(255) not null, email varchar(255), gender varchar(10), DOB date);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> create table listings(id int primary key auto_increment, business varchar(255) not null);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> create table reviews(id int primary key auto_increment, rating enum('1','2','3','4','5') not null, listing_id int not null, user_review_id int not null, review varchar(255), user_authorize_id int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> alter table user add column type varchar(50) not null;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table comments(id int primary key auto_increment, comment varchar(255) not null, review_id int not null, user_comment_id int not null);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> alter table reviews change review review varchar(255) not null;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table offensive_reports(id int primary key auto_increment, report varchar(255) not null, comment_id int not null, user_report_id int not null);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> alter table user rename to users;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc users;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(255) | NO   |     | NULL    |                |
+| email  | varchar(255) | YES  |     | NULL    |                |
+| gender | varchar(10)  | YES  |     | NULL    |                |
+| DOB    | date         | YES  |     | NULL    |                |
+| type   | varchar(50)  | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc listings;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| business | varchar(255) | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc reviews;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| id                | int(11)                   | NO   | PRI | NULL    | auto_increment |
+| rating            | enum('1','2','3','4','5') | NO   |     | NULL    |                |
+| listing_id        | int(11)                   | NO   |     | NULL    |                |
+| user_review_id    | int(11)                   | NO   |     | NULL    |                |
+| review            | varchar(255)              | NO   |     | NULL    |                |
+| user_authorize_id | int(11)                   | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc comments;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| comment         | varchar(255) | NO   |     | NULL    |                |
+| review_id       | int(11)      | NO   |     | NULL    |                |
+| user_comment_id | int(11)      | NO   |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> desc offensive_reports;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| report         | varchar(255) | NO   |     | NULL    |                |
+| comment_id     | int(11)      | NO   |     | NULL    |                |
+| user_report_id | int(11)      | NO   |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table reviews add constraint unique(listing_id,user_review_id);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table offensive_reports add constraint unique(comment_id, user_report_id);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc reviews;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| id                | int(11)                   | NO   | PRI | NULL    | auto_increment |
+| rating            | enum('1','2','3','4','5') | NO   |     | NULL    |                |
+| listing_id        | int(11)                   | NO   | MUL | NULL    |                |
+| user_review_id    | int(11)                   | NO   |     | NULL    |                |
+| review            | varchar(255)              | NO   |     | NULL    |                |
+| user_authorize_id | int(11)                   | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table reviews add constraint foreign key(listing_id) references listings(id);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table reviews add constraint foreign key(user_review_id) references users(id);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table comments add constraint foreign key(review_id) references reviews(id);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table comments add constraint foreign key(user_comment_id) references users(id);
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table offensive_reports add constraint foreign key(comment_id) references comments(id);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table offensive_reports add constraint foreign key(user_report_id) references users(id);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc users;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(255) | NO   |     | NULL    |                |
+| email  | varchar(255) | YES  |     | NULL    |                |
+| gender | varchar(10)  | YES  |     | NULL    |                |
+| DOB    | date         | YES  |     | NULL    |                |
+| type   | varchar(50)  | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc reviews;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| id                | int(11)                   | NO   | PRI | NULL    | auto_increment |
+| rating            | enum('1','2','3','4','5') | NO   |     | NULL    |                |
+| listing_id        | int(11)                   | NO   | MUL | NULL    |                |
+| user_review_id    | int(11)                   | NO   | MUL | NULL    |                |
+| review            | varchar(255)              | NO   |     | NULL    |                |
+| user_authorize_id | int(11)                   | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into users(name,email, gender, DOB, type) values ('priyank','priyank@vinsol.com','male','1988-09-25','admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users(name,email, gender, DOB, type) values ('sushant','sushant@vinsol.com','male','1989-10-14','normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users(name,email, gender, DOB, type) values ('vaibhav','vaibhav@vinsol.com','male','1989-10-04','normal');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users(name,email, gender, DOB, type) values ('manik','manik@vinsol.com','male','1980-01-04','admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users(name,email, gender, DOB, type) values ('waseem','waseem@vinsol.com','male','1984-06-19','admin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from users;
++----+---------+--------------------+--------+------------+--------+
+| id | name    | email              | gender | DOB        | type   |
++----+---------+--------------------+--------+------------+--------+
+|  1 | priyank | priyank@vinsol.com | male   | 1988-09-25 | admin  |
+|  2 | sushant | sushant@vinsol.com | male   | 1989-10-14 | normal |
+|  3 | vaibhav | vaibhav@vinsol.com | male   | 1989-10-04 | normal |
+|  4 | manik   | manik@vinsol.com   | male   | 1980-01-04 | admin  |
+|  5 | waseem  | waseem@vinsol.com  | male   | 1984-06-19 | admin  |
++----+---------+--------------------+--------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> desc reviews;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| id                | int(11)                   | NO   | PRI | NULL    | auto_increment |
+| rating            | enum('1','2','3','4','5') | NO   |     | NULL    |                |
+| listing_id        | int(11)                   | NO   | MUL | NULL    |                |
+| user_review_id    | int(11)                   | NO   | MUL | NULL    |                |
+| review            | varchar(255)              | NO   |     | NULL    |                |
+| user_authorize_id | int(11)                   | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> desc listings;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| business | varchar(255) | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table listings add column listing varchar(255);
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc listings;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| business | varchar(255) | NO   |     | NULL    |                |
+| listing  | varchar(255) | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into listings(business, listing) values('cinema','best one in city');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into listings(business, listing) values('restaurant','best one in city');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into listings(business, listing) values('restaurant','here is thet taste');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into listings(business, listing) values('hotel','feel like home');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into listings(business, listing) values('cinema','come, watch n enjoy');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from listings;
++----+------------+---------------------+
+| id | business   | listing             |
++----+------------+---------------------+
+|  1 | cinema     | best one in city    |
+|  2 | restaurant | best one in city    |
+|  3 | restaurant | here is thet taste  |
+|  4 | hotel      | feel like home      |
+|  5 | cinema     | come, watch n enjoy |
++----+------------+---------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc reviews;
++-------------------+---------------------------+------+-----+---------+----------------+
+| Field             | Type                      | Null | Key | Default | Extra          |
++-------------------+---------------------------+------+-----+---------+----------------+
+| id                | int(11)                   | NO   | PRI | NULL    | auto_increment |
+| rating            | enum('1','2','3','4','5') | NO   |     | NULL    |                |
+| listing_id        | int(11)                   | NO   | MUL | NULL    |                |
+| user_review_id    | int(11)                   | NO   | MUL | NULL    |                |
+| review            | varchar(255)              | NO   |     | NULL    |                |
+| user_authorize_id | int(11)                   | YES  |     | NULL    |                |
++-------------------+---------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review,user_authorize_id) values('4','3','2','nice to be there',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review,user_authorize_id) values('5','1','3','best experience of my life',4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review) values('3','5','1','enjoyed a lot');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review) values('4','5','1','enjoyed a lot');
+ERROR 1062 (23000): Duplicate entry '5-1' for key 'listing_id'
+mysql> insert into reviews(rating,listing_id,user_review_id,review) values('4','5','5','this is wat i dream for');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review) values('3','3','2','nice food');
+ERROR 1062 (23000): Duplicate entry '3-2' for key 'listing_id'
+mysql> insert into reviews(rating,listing_id,user_review_id,review) values('3','3','1','nice food');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review,user_authorize_id) values('5','4','3','felt like home',4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into reviews(rating,listing_id,user_review_id,review,user_authorize_id) values('2','4','2','dont want to be there again',5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from reviews;
++----+--------+------------+----------------+-----------------------------+-------------------+
+| id | rating | listing_id | user_review_id | review                      | user_authorize_id |
++----+--------+------------+----------------+-----------------------------+-------------------+
+|  1 | 4      |          3 |              2 | nice to be there            |                 1 |
+|  2 | 5      |          1 |              3 | best experience of my life  |                 4 |
+|  3 | 3      |          5 |              1 | enjoyed a lot               |              NULL |
+|  4 | 4      |          5 |              5 | this is wat i dream for     |              NULL |
+|  5 | 3      |          3 |              1 | nice food                   |              NULL |
+|  6 | 5      |          4 |              3 | felt like home              |                 4 |
+|  7 | 2      |          4 |              2 | dont want to be there again |                 5 |
++----+--------+------------+----------------+-----------------------------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc comments;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| comment         | varchar(255) | NO   |     | NULL    |                |
+| review_id       | int(11)      | NO   | MUL | NULL    |                |
+| user_comment_id | int(11)      | NO   | MUL | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('awesome',3,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from reviews;
++----+--------+------------+----------------+-----------------------------+-------------------+
+| id | rating | listing_id | user_review_id | review                      | user_authorize_id |
++----+--------+------------+----------------+-----------------------------+-------------------+
+|  1 | 4      |          3 |              2 | nice to be there            |                 1 |
+|  2 | 5      |          1 |              3 | best experience of my life  |                 4 |
+|  3 | 3      |          5 |              1 | enjoyed a lot               |              NULL |
+|  4 | 4      |          5 |              5 | this is wat i dream for     |              NULL |
+|  5 | 3      |          3 |              1 | nice food                   |              NULL |
+|  6 | 5      |          4 |              3 | felt like home              |                 4 |
+|  7 | 2      |          4 |              2 | dont want to be there again |                 5 |
++----+--------+------------+----------------+-----------------------------+-------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc coments;
+ERROR 1146 (42S02): Table 'mysqltest.coments' doesn't exist
+mysql> desc comments;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| id              | int(11)      | NO   | PRI | NULL    | auto_increment |
+| comment         | varchar(255) | NO   |     | NULL    |                |
+| review_id       | int(11)      | NO   | MUL | NULL    |                |
+| user_comment_id | int(11)      | NO   | MUL | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('hey',1,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('hi',6,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('hello',2,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('heya',4,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('cool',5,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('hot',7,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('nice',7,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into comments(comment,review_id,user_comment_id) values('fantabulous',3,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from comments;
++----+-------------+-----------+-----------------+
+| id | comment     | review_id | user_comment_id |
++----+-------------+-----------+-----------------+
+|  1 | awesome     |         3 |               2 |
+|  2 | hey         |         1 |               4 |
+|  3 | hi          |         6 |               5 |
+|  4 | hello       |         2 |               1 |
+|  5 | heya        |         4 |               2 |
+|  6 | cool        |         5 |               1 |
+|  7 | hot         |         7 |               4 |
+|  8 | nice        |         7 |               3 |
+|  9 | fantabulous |         3 |               3 |
++----+-------------+-----------+-----------------+
+9 rows in set (0.00 sec)
+
+mysql> desc offensive_reports;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| report         | varchar(255) | NO   |     | NULL    |                |
+| comment_id     | int(11)      | NO   | MUL | NULL    |                |
+| user_report_id | int(11)      | NO   | MUL | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('get lost',7,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('not cool',6,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('loser',9,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('remove it',2,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('remo',2,1);
+ERROR 1062 (23000): Duplicate entry '2-1' for key 'comment_id'
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('crazy',7,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into offensive_reports(report,comment_id,user_report_id) values('bad',3,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from offensive_reports;
++----+-----------+------------+----------------+
+| id | report    | comment_id | user_report_id |
++----+-----------+------------+----------------+
+|  1 | get lost  |          7 |              1 |
+|  2 | not cool  |          6 |              4 |
+|  3 | loser     |          9 |              2 |
+|  4 | remove it |          2 |              1 |
+|  5 | crazy     |          7 |              3 |
+|  6 | bad       |          3 |              3 |
++----+-----------+------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> 
+
