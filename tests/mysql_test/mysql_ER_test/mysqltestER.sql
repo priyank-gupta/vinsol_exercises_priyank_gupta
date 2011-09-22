@@ -30,7 +30,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`),
   KEY `review_id` (`review_id`),
   KEY `user_comment_id` (`user_comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (1,'awesome',3,2),(2,'hey',1,4),(3,'hi',6,5),(4,'hello',2,1),(5,'heya',4,2),(6,'cool',5,1),(7,'hot',7,4),(8,'nice',7,3),(9,'fantabulous',3,3);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,8 +53,9 @@ DROP TABLE IF EXISTS `listings`;
 CREATE TABLE `listings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `business` varchar(255) NOT NULL,
+  `listing` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +64,7 @@ CREATE TABLE `listings` (
 
 LOCK TABLES `listings` WRITE;
 /*!40000 ALTER TABLE `listings` DISABLE KEYS */;
+INSERT INTO `listings` VALUES (1,'cinema','best one in city'),(2,'restaurant','best one in city'),(3,'restaurant','here is thet taste'),(4,'hotel','feel like home'),(5,'cinema','come, watch n enjoy');
 /*!40000 ALTER TABLE `listings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +83,7 @@ CREATE TABLE `offensive_reports` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `comment_id` (`comment_id`,`user_report_id`),
   KEY `user_report_id` (`user_report_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,6 +92,7 @@ CREATE TABLE `offensive_reports` (
 
 LOCK TABLES `offensive_reports` WRITE;
 /*!40000 ALTER TABLE `offensive_reports` DISABLE KEYS */;
+INSERT INTO `offensive_reports` VALUES (1,'get lost',7,1),(2,'not cool',6,4),(3,'loser',9,2),(4,'remove it',2,1),(5,'crazy',7,3),(6,'bad',3,3);
 /*!40000 ALTER TABLE `offensive_reports` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +113,7 @@ CREATE TABLE `reviews` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `listing_id` (`listing_id`,`user_review_id`),
   KEY `user_review_id` (`user_review_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +122,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+INSERT INTO `reviews` VALUES (1,'4',3,2,'nice to be there',1),(2,'5',1,3,'best experience of my life',4),(3,'3',5,1,'enjoyed a lot',NULL),(4,'4',5,5,'this is wat i dream for',NULL),(5,'3',3,1,'nice food',NULL),(6,'5',4,3,'felt like home',4),(7,'2',4,2,'dont want to be there again',5);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +141,7 @@ CREATE TABLE `users` (
   `DOB` date DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,6 +150,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'priyank','priyank@vinsol.com','male','1988-09-25','admin'),(2,'sushant','sushant@vinsol.com','male','1989-10-14','normal'),(3,'vaibhav','vaibhav@vinsol.com','male','1989-10-04','normal'),(4,'manik','manik@vinsol.com','male','1980-01-04','admin'),(5,'waseem','waseem@vinsol.com','male','1984-06-19','admin');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -157,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-09-22 18:03:04
+-- Dump completed on 2011-09-22 18:36:19
