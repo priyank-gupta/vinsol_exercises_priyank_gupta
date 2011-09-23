@@ -1,0 +1,116 @@
+
+A)
+mysql> select listings.id,listing, avg(rating) from listings, reviews where listings.id = listing_id and user_authorize_id is not null group by listings.id order by avg(rating) desc;
++----+--------------------+-------------+
+| id | listing            | avg(rating) |
++----+--------------------+-------------+
+|  1 | best one in city   |           5 |
+|  3 | here is thet taste |           4 |
+|  4 | feel like home     |         3.5 |
++----+--------------------+-------------+
+3 rows in set (0.00 sec)
+
+B)
+mysql> select review, count(comment) from (select * from reviews where listing_id='4') p,comments where review_id = p.id and user_authorize_id is not null group by review order by count(comment);
++-----------------------------+----------------+
+| review                      | count(comment) |
++-----------------------------+----------------+
+| felt like home              |              1 |
+| dont want to be there again |              2 |
++-----------------------------+----------------+
+2 rows in set (0.00 sec)
+
+C)
+mysql> select comment,count(report) from (select comment,comments.id from comments, reviews where review_id = reviews.id and listing_id = '4' and user_authorize_id is not null) p,offensive_reports where comment_id = p.id group by comment order by count(report);
++---------+---------------+
+| comment | count(report) |
++---------+---------------+
+| hi      |             1 |
+| hot     |             2 |
++---------+---------------+
+2 rows in set (0.00 sec)
+
+D)
+mysql> select * from users where DOB = (select min(DOB) from users where gender='male' );
++----+-------+------------------+--------+------------+-------+
+| id | name  | email            | gender | DOB        | type  |
++----+-------+------------------+--------+------------+-------+
+|  4 | manik | manik@vinsol.com | male   | 1980-01-04 | admin |
++----+-------+------------------+--------+------------+-------+
+1 row in set (0.00 sec)
+
+E)
+select * from (select name, count(comment) as s from users, comments where user_comment_id = users.id  group by users.id) p where s = (select max(s) from (select name, count(comment) as s from users, comments where user_comment_id = users.id  group by users.id ) as d);
++---------+---+
+| name    | s |
++---------+---+
+| priyank | 2 |
+| sushant | 2 |
+| vaibhav | 2 |
+| manik   | 2 |
++---------+---+
+4 rows in set (0.00 sec)
+
+F)
+mysql> select * from (select name, count(comment) as s from comments,users where review_id = 3 and user_comment_id=users.id group by users.id) p where s = (select max(s) from (select name, count(comment) as s from comments,users where review_id = 3 and user_comment_id=users.id group by users.id) as d);
++---------+---+
+| name    | s |
++---------+---+
+| sushant | 1 |
+| vaibhav | 1 |
++---------+---+
+2 rows in set (0.00 sec)
+
+G)
+mysql> select * from (select reviews.id, review, count(report) s from (select review_id,report from comments, offensive_reports where comment_id = comments.id) as p, reviews where reviews.id = review_id group by review_id) as d where s=(select max(s) from (select reviews.id, review, count(report) s from (select review_id,report from comments, offensive_reports where comment_id = comments.id) as p, reviews where reviews.id = review_id group by review_id) as f) ;
++----+-----------------------------+---+
+| id | review                      | s |
++----+-----------------------------+---+
+|  7 | dont want to be there again | 2 |
++----+-----------------------------+---+
+1 row in set (0.02 sec)
+
+H)
+mysql> select * from (select name,count(offensive_reports.id) as c from offensive_reports, users where users.id = user_report_id group by users.id) as p where c=(select max(c) from (select name,count(offensive_reports.id) as c from offensive_reports, users where users.id = user_report_id group by users.id) as d);
++---------+---+
+| name    | c |
++---------+---+
+| priyank | 2 |
+| vaibhav | 2 |
++---------+---+
+2 rows in set (0.00 sec)
+
+I)
+mysql> select * from reviews where id not in (select review_id from offensive_reports, comments where comment_id = comments.id);
++----+--------+------------+----------------+----------------------------+-------------------+
+| id | rating | listing_id | user_review_id | review                     | user_authorize_id |
++----+--------+------------+----------------+----------------------------+-------------------+
+|  2 | 5      |          1 |              3 | best experience of my life |                 4 |
+|  4 | 4      |          5 |              5 | this is wat i dream for    |              NULL |
++----+--------+------------+----------------+----------------------------+-------------------+
+2 rows in set (0.00 sec)
+
+J)
+mysql> select review, comment,user_review_id from reviews, comments where review_id = reviews.id and user_comment_id = user_review_id;
++-----------+---------+----------------+
+| review    | comment | user_review_id |
++-----------+---------+----------------+
+| nice food | cool    |              1 |
++-----------+---------+----------------+
+1 row in set (0.00 sec)
+
+K)
+mysql> select concat(cast((to_days(now())-to_days(DOB))/365.25 as unsigned)," years") from users;
++-------------------------------------------------------------------------+
+| concat(cast((to_days(now())-to_days(DOB))/365.25 as unsigned)," years") |
++-------------------------------------------------------------------------+
+| 23 years                                                                |
+| 22 years                                                                |
+| 22 years                                                                |
+| 32 years                                                                |
+| 27 years                                                                |
++-------------------------------------------------------------------------+
+5 rows in set (0.00 sec)
+
+
+
