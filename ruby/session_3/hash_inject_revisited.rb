@@ -29,13 +29,13 @@ class Array
 			end
 		end
 		hash.inject(re_hash) {
-		|a, el|
-		if (el[0] % 2 == 0)
-			a["even"].push el[1]
-		else
-			a["odd"].push el[1]
-		end
-		a
+			|a, el|
+			if (el[0] % 2 == 0)
+				a["even"].push el[1]
+			else
+				a["odd"].push el[1]
+			end
+			a
 		}
 		re_hash
 	end
