@@ -1,7 +1,7 @@
 
 def sum_time t1, t2
 	
-	regExp = /^([01]?[0-9]|[2][0-4])\:([0-5]?[0-9])\:([0-5]?[0-9])$/										#regular expression to validate time
+	regExp = /^([01]?[0-9]|[2][0-3])\:([0-5]?[0-9])\:([0-5]?[0-9])$/										#regular expression to validate time
 	
 	if t1 =~ regExp && t2 =~ regExp
 	
