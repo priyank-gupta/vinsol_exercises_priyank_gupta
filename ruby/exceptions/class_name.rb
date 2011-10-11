@@ -4,7 +4,7 @@ class Name
 	attr_reader :first_name , :last_name
 	
 	def initialize (first, last)
-		@first_name = first
+		@first_name = first.capitalize
 		@last_name = last
 	end
 	
@@ -42,4 +42,5 @@ puts naam.first_name
 puts naam.last_name
 naam.first_name = nil
 naam.last_name = ""
-
+naam.first_name = "shubham"
+puts naam.full_name
