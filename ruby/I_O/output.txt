@@ -1,0 +1,8 @@
+
+Developers:
+John (EmpId: 12)
+Jack (EmpId: 15)
+
+Designers:
+Mary (EmpId: 13)
+Jane (EmpId: 17)
