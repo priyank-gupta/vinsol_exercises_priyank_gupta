@@ -4,8 +4,8 @@ class Name
 	attr_reader :first_name , :last_name
 	
 	def initialize (first, last)
-		@first_name = first.capitalize
-		@last_name = last
+		self.first_name = first
+		self.last_name = last
 	end
 	
 	def first_name=(first)
@@ -13,7 +13,8 @@ class Name
 			if first == nil || first.length == 0
 				raise ("Should have first name")
 			end
-			@first_name = first.capitalize
+			first_name = first.capitalize
+			@first_name = first_name
 		rescue Exception => e
 			puts e.message
 		end
@@ -36,11 +37,9 @@ class Name
 
 end
 
-naam = Name.new("priyank","gupta")
-puts naam.full_name
-puts naam.first_name
-puts naam.last_name
-naam.first_name = nil
-naam.last_name = ""
-naam.first_name = "shubham"
-puts naam.full_name
+naam1 = Name.new('priyank', 'gupta')
+puts naam1.full_name  
+naam1.first_name = 'shubham'  
+puts naam1.full_name 
+naam1.first_name = nil
+naam1.last_name = ""
