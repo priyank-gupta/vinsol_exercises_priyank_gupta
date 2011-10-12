@@ -4,11 +4,11 @@ class XML_Format
 	require 'rubygems'
 	require 'nokogiri'
 	
-	$arr = []
+	$arr = []			#global variable for final array
 	
 	def initialize f
 	
-		file = File.open(f)
+		file = File.open(f)			#opening xml file and saving its content
 		xml_doc = Nokogiri::XML(file)
 		file.close
 		root_child = xml_doc.root().children
@@ -17,9 +17,9 @@ class XML_Format
 		
 	end
 	
-	private
+	private				#methods are private after this
 	
-	def iterate root_child_itr
+	def iterate root_child_itr			#to iterate over the nodes
 	
 		loop do
 	
@@ -34,7 +34,7 @@ class XML_Format
 		end
 	end
 	
-	def scan root_child_scan
+	def scan root_child_scan			# to iterate over the childnodes
 
 		for i in 0...root_child_scan.length do
 	
@@ -45,7 +45,7 @@ class XML_Format
 		end			
 	end
 	
-	def output arr_out
+	def output arr_out			#to print the formated file
 	
 		puts "<?xml version='1.0'?>\n<people>\n"
 		
@@ -62,6 +62,6 @@ class XML_Format
 end
 
 puts "enter the filename you want to format (test1.xml/test2.xml/test3.xml)"
-file = gets.chomp
-XML_Format.new(file)
+file = gets.chomp				#asking for input of a filename from user
+XML_Format.new(file)			#instantiating the XML_Foramt class
 
