@@ -1,15 +1,16 @@
-<?xml version='1.0'?>
+<?xml version="1.0"?>
 <people>
   <person>
     <name>
-      <first>Abc</first>
-      <last>xyz</last>
+      <first>Shreya</first>
+      <last>bhatia</last>
+      <address>Vinsol.com</address>
     </name>
   </person>
   <person>
     <name>
-      <first>Shreya</first>
-      <last>Bhatia</last>
+      <first>Abc</first>
+      <last>Xyz</last>
     </name>
   </person>
 </people>

@@ -55,8 +55,9 @@ class XML_Format
 	def output arr_out			#to print the formated file
 		
 		out_doc = File.new("output.xml", "w")
-		doc = Nokogiri::XML::DocumentFragment.parse(out_doc)
+		doc = Nokogiri::XML::Document.parse(out_doc)
 		people = Nokogiri::XML::Node.new "people", doc
+		doc.add_child(people)
 		
 		for i in 0...arr_out.length do
 			
@@ -83,9 +84,8 @@ class XML_Format
 				
 			end
 		end
-		
-		out_doc.puts "<?xml version='1.0'?>"
-		out_doc.puts people
+
+		out_doc.puts doc
 		puts "Check output.xml for output"
 	end
 	
