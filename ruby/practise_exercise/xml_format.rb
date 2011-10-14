@@ -31,7 +31,10 @@ class XML_Format
 	  ## Collect root_child_itr.children in a variable since it being used twice
 	  ## Can you try using some other conditional construct other than loop and break?
 		while true
+		  ###### Use an intuitive variable name
 			temp = root_child_itr.children
+			
+			##### if temp.children[0]
 			if temp.children[0] == nil			#checking if the node is innermost as innermost node will not be having any childnode
 				@@arr.push temp
         break
@@ -59,6 +62,7 @@ class XML_Format
 		people = Nokogiri::XML::Node.new "people", doc
 		doc.add_child(people)
 		
+		
 		for i in 0...arr_out.length do
 			
 			person = Nokogiri::XML::Node.new "person", doc
@@ -67,21 +71,15 @@ class XML_Format
 			person.add_child(name)
 			first = Nokogiri::XML::Node.new "first", doc
 			last = Nokogiri::XML::Node.new "last", doc
-			address = Nokogiri::XML::Node.new "address", doc
 			
-			for j in 0...arr_out[i].length do
-				
+			for j in 0...arr_out[i].length do		
 				if (arr_out[i][j] && j == 0)
 					first.content = arr_out[i][j]
-					name.add_child (first)
+					name.add_child first
 				elsif (arr_out[i][j] && j == 1)
 					last.content = arr_out[i][j]
 					first.add_next_sibling(last)
-				elsif (arr_out[i][j] && j == 2)
-					address.content = arr_out[i][j]
-					last.add_next_sibling(address)
-				end				
-				
+				end						
 			end
 		end
 
@@ -99,6 +97,7 @@ rescue StandardError => e			#exception handler
 	puts "File not found... Try Again"
 	retry
 end
-	
+
+########### -> This should be XML_Format.new(file).change_format; 	
 XML_Format.new(file)			#instantiating the XML_Foramt class
 

@@ -3,14 +3,13 @@
   <person>
     <name>
       <first>Shreya</first>
-      <last>bhatia</last>
-      <address>Vinsol.com</address>
+      <last>Bhatia</last>
     </name>
   </person>
   <person>
     <name>
       <first>Abc</first>
-      <last>Xyz</last>
+      <last>xyz</last>
     </name>
   </person>
 </people>
