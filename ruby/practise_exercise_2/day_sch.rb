@@ -38,7 +38,7 @@ class BusinessCenterHours
 		meet_dur = meet_dur / 36
 		day, date, time = parse_date_time(date_time)			#parsing variable in date_time format
 		start_t, end_t = check_updated(day, date)				#checking if the date or day is updated to have new start time/end time
-		start_t = time
+		start_t = time if start_t < time
 		date_temp = date.dup
 		loop do
 			if is_holiday(date_temp)			# checking if a particular day is holiday
