@@ -1,24 +1,31 @@
 <?php session_start();
+include "db_connect.php";
 if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign up') {
 	if (IsSet($_POST['session_username']) && IsSet($_POST['session_password']) && IsSet($_POST['session_name']) && IsSet($_POST['session_email']) && IsSet($_POST['session_gender'])) {
-		$name = $_POST['session_name'];
-		$usr_name = $_POST['session_username'];
-		$pwd = $_POST['session_password'];
-		$email = $_POST['session_password'];
-		$gender = $_POST['session_gender'];
-		mysql_connect('localhost','priyank','priyank');
-		mysql_select_db('blog');
+		$name = mysql_real_escape_string($_POST['session_name']);
+		$name = filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS);
+		$usr_name = mysql_real_escape_string($_POST['session_username']);
+		$usr_name = filter_var($usr_name, FILTER_SANITIZE_SPECIAL_CHARS);
+		$pwd = mysql_real_escape_string($_POST['session_password']);
+		$pwd = filter_var($pwd, FILTER_SANITIZE_SPECIAL_CHARS);
+		$email = mysql_real_escape_string($_POST['session_password']);
+		$email = filter_var($email, FILTER_SANITIZE_SPECIAL_CHARS);
+		$gender = mysql_real_escape_string($_POST['session_gender']);
 		$query = "select username from users where username='$usr_name'" ;
 		$result = mysql_query($query);
 		if (mysql_num_rows($result) == 0) {
 			$query = "insert into users(username,password,name,email,gender) values('$usr_name','$pwd','$name','$email','$gender')";
 			$result = mysql_query($query);
+			$query = "select id from users where username = '$usr_name'";
+			$result = mysql_query($query);
+			$row = mysql_fetch_array($result);
+			$user_id = $row[0];
 			if ((($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "image/jpeg") || ($_FILES["file"]["type"] == "image/pjpeg") || ($_FILES["file"]["type"] == "image/png") || ($_FILES["file"]["type"] == "image/jpg")) && ($_FILES["file"]["size"] < 2000000))  {
 				if ($_FILES["file"]["error"] > 0) {
 					echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
 				} else {
 					$type = substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"],"."));
-					$_FILES["file"]["name"] = $usr_name.$type;
+					$_FILES["file"]["name"] = $user_id.$type;
 					$image_type = $_FILES["file"]["type"];
 					echo $image_type;
 					$image_size = ($_FILES["file"]["size"] / 1024) . " Kb";
@@ -26,14 +33,14 @@ if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign up') {
 					$image_name = $_FILES["file"]["name"];
 					echo $image_name;
 					move_uploaded_file($_FILES["file"]["tmp_name"],"upload/".$_FILES['file']['name']);
-					$sql = "insert into image(username,image_type,image_size,image_name) values('$usr_name','$image_type','$image_size','$image_name')";
+					$sql = "insert into image(user_id,image_type,image_size,image_name) values('$user_id','$image_type','$image_size','$image_name')";
 					$upload_query = mysql_query($sql);
 					echo mysql_affected_rows();
 				}
 			} else {
 			echo "Invalid file";
 			}
-			$_SESSION['usr_name'] = $usr_name;
+			$_SESSION['user_id'] = $user_id;
 			header("Location: /blog/welcome/home.php");
 			exit;
 		} else {
@@ -108,7 +115,7 @@ if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign up') {
 					    <input id="session_submit" name="commit" type="submit" value="Sign up" onclick="return validat()"/><span style='clear:both;'></span>
 					  </span>
 					  <span class='actions' style='float:left'>
-							<a href="/blog/login_page.php" id="sign_in">Sign In</a>
+							<a href="/blog/index.php" id="sign_in">Sign In</a>
 						</span> 
 					</fieldset> 
 				</form>

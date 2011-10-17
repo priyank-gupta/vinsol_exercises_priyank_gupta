@@ -1,41 +1,25 @@
 <?php session_start();
-if(!isset($_SESSION['usr_name'])) {
-	header("Location: /blog/login_page.php");
-	exit();
-}
-$usr_name = $_SESSION['usr_name'];
-mysql_connect('localhost','priyank','priyank');
-mysql_select_db('blog');
-if(!isset($_SESSION['name'])) {
-	$query = "select name from users where username='$usr_name'" ;
-	$result = mysql_query($query);
-	while($row = mysql_fetch_array($result)) {
-		$name = $row[0];
-		$_SESSION['name'] = $name;
-	}
-} else {
-	$name = $_SESSION['name'];
-}
+include "../../db_connect.php";
+include "../../session_check.php";
 
 /* -- Choosing the category to display -- */
-
+include "../../logout.php";
+$u_name_query = "select username from users where id = '$user_id'";
+$u_name_result = mysql_query($u_name_query);
+$row = mysql_fetch_array($u_name_result);
+$username = $$row[0];
 if(!isset($_POST['opt_category']) || $_POST['opt_category'] == 'all') {
 	$opt_cat = $_POST['opt_category'];
-	$query = "select title,shayari,category,shayari_id from shayari where username='$usr_name' order by updated_on desc, posted_on desc";
+	$query = "select title,shayari,category,shayari_id from shayari where user_id='$user_id' order by updated_on desc, posted_on desc";
 	$result = mysql_query($query);
 } else if(isset($_POST['opt_category']) && $_POST['opt_category'] != 'all') {
 	$opt_cat = $_POST['opt_category'];
-	$query = "select title,shayari,category,shayari_id from shayari where username='$usr_name' and category='$opt_cat' order by updated_on desc, posted_on desc";
+	$query = "select title,shayari,category,shayari_id from shayari where user_id='$user_id' and category='$opt_cat' order by updated_on desc, posted_on desc";
 	$result = mysql_query($query);
 }
 
 /* -- selecting the profile pic -- */
-$sql = "select image_name from image where username='$usr_name'";
-$res = mysql_query($sql);
-if(mysql_num_rows($res) == 1) {
-	$image_row = mysql_fetch_array($res);
-	$image = $image_row['image_name'];
-}
+include "../../image_display.php";
 ?>
 <html>
 <head>
@@ -78,12 +62,15 @@ h2 {
 	color:#8d3636;
 	margin-top:0;
 }
+div#edit_del {
+	float:right;
+}
 </style>
 </head>
 <body id='main'>
 	<div>
 		<div id='maindiv'>
-			<div id='logout'><a href='/blog/login_page.php' /><img src='/blog/pictures/logout.jpg' /></a></div>
+			<div id='logout'><form method='post' action='My_Shayari.php'><input type='hidden' name='logout' value='logout'/><input type='image' src='/blog/pictures/logout.jpg' alt='Logout'/></form></div>
 			<h1><span style="color: #700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">e</span><span style="color:#9b4f4f">r</span><span style="color:#9b4f4f">-</span><span style="color:#700404">O</span><span style="color:#9b4f4f">-</span><span style="color:#700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">a</span><span style="color:#9b4f4f">y</span><span style="color:#a96868">a</span><span style="color:#b88282">r</span><span style="color:#c69b9b">i</span></h1>
 			<p id='welcome'> Hi! <?php echo $name ?> </p><br/>
 		</div>
@@ -116,16 +103,26 @@ h2 {
 								echo "<p><b>Title:&nbsp;&nbsp;</b>".$row['title']."</p>";
 								echo "<p><b>Category:</b>&nbsp;&nbsp;".$row['category']."</p>";
 								echo "<div><b>Shayari:</b><br/><pre>".$row['shayari']."</pre></div>";
+								echo "<div id = 'edit_del'>";
+									echo "<form method = 'post' action = '/blog/welcome/post_shayari/Post_Shayari.php'>";
+										echo "<input type='hidden' name='edit_del_s_id' value='$shayari_id' id='edit_del_s_id' />";
+										echo "<input type='submit' name='edit' value='Edit'/>";
+										echo "<input type='button' name='delete' value='Delete' onclick='delete_shayari(this,".'"'.$shayari_id.'"'.")' />";
+									echo "</form>";
+								echo  "</div><br/>";
 								echo "<fieldset>";
 									echo "<legend>Comments</legend>";
 									/* -- Displaying the comments to the specified shayari -- */
 									echo "<div id='display_comments'>";
-										$query2 = "select username, comment from comment where shayari_id = '$shayari_id'";
+										$query2 = "select user_id, comment from comment where shayari_id = '$shayari_id'";
 										$result2 = mysql_query($query2);
 										while ($row_comments = mysql_fetch_array($result2)) {
 											$show_comment = $row_comments['comment'];
-											$show_user = $row_comments['username'];
-											echo "<p><b>".$show_user.":</b>&nbsp;&nbsp;".$show_comment."</p>";
+											$u_id = $row_comments['user_id'];
+											$u_name_query = "select username from users where id = '$u_id'";
+											$u_name_result = mysql_query($u_name_query);
+											$row1 = mysql_fetch_array($u_name_result);
+											echo "<p><b>".$row1[0].":</b>&nbsp;&nbsp;".$show_comment."</p>";
 										}
 									echo "</div>";
 									echo "<div>";

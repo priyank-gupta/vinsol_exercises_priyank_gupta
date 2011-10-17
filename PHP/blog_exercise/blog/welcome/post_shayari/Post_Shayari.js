@@ -41,3 +41,13 @@ function clr_error() {
 		error3.innerHTML = '';
 	}
 }
+
+function set_category(val) {
+	opt = document.getElementsByTagName('option');
+	for (var i=0; i < opt.length; i++) {
+		if(opt[i].value == val) {
+			opt[i].selected = true;
+			break;
+		}
+	}
+}

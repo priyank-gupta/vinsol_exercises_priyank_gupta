@@ -1,17 +1,20 @@
 <?php session_start();
-if(isset($_SESSION['usr_name'])) {
-	session_destroy();
-}
+include "db_connect.php";
 if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign in') {
 	if (IsSet($_POST['session_username']) && IsSet($_POST['session_password'])) {
-		$usr_name = $_POST['session_username'];
-		$pwd = $_POST['session_password'];
-		mysql_connect('localhost','priyank','priyank');
-		mysql_select_db('blog');
+		$usr_name = mysql_real_escape_string($_POST['session_username']);
+		$usr_name = filter_var($usr_name, FILTER_SANITIZE_SPECIAL_CHARS);
+		$pwd = mysql_real_escape_string($_POST['session_password']);
+		$pwd = filter_var($pwd, FILTER_SANITIZE_SPECIAL_CHARS);
 		$query = "select username, password from users where username='$usr_name' and password='$pwd'" ;
 		$result = mysql_query($query);
+		$query1 = "select id from users where username = '$usr_name'";
+		$result1 = mysql_query($query1);
+		$row = mysql_fetch_array($result1);
+		$user_id = $row[0];
+		echo $user_id;
 		if (mysql_num_rows($result) == 1) {
-			$_SESSION['usr_name'] = $usr_name;
+			$_SESSION['user_id'] = $user_id;
 			header("Location: /blog/welcome/home.php");
 			exit;
 		} else {
@@ -49,7 +52,7 @@ if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign in') {
 		<h1><span style="color: #700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">e</span><span style="color:#9b4f4f">r</span><span style="color:#9b4f4f">-</span><span style="color:#700404">O</span><span style="color:#9b4f4f">-</span><span style="color:#700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">a</span><span style="color:#9b4f4f">y</span><span style="color:#a96868">a</span><span style="color:#b88282">r</span><span style="color:#c69b9b">i</span></h1>
 		<div id ="container"> 
 		  <div> 
-				<form accept-charset="UTF-8" action="login_page.php" method="post">  
+				<form accept-charset="UTF-8" action="index.php" method="post">  
 					<fieldset>
 						<legend>Sign in</legend> 
 						<span class='error' id='error3'><?php echo $message; ?></span>
@@ -73,7 +76,7 @@ if(IsSet($_POST['commit']) && $_POST['commit'] == 'Sign in') {
 			</div> 
 		</div>
 	</div>
-	<script type='text/javascript' src='login_page.js'>
+	<script type='text/javascript' src='index.js'>
 	</script>	
 </body>
 </html>

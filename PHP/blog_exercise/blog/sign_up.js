@@ -29,7 +29,7 @@ function validat()
 			error6.innerHTML = '*email not valid';
 		}
 		if (naam.value == '' || regExpBlank.test(naam.value)) {
-			error1.innerHTML = '*this field cannot be blank';
+			error1.innerHTML = "*this field cannot be blank";
 			naam.focus();
 			c=1;
 		} 	
@@ -39,7 +39,7 @@ function validat()
 			c=1;
 		}
 		if (pass.value == '' || regExpBlank.test(pass.value)) {
-			error2.innerHTML = '*this field cannot be blank';
+			error2.innerHTML = "*this field cannot be blank";
 			pass.focus();
 			c=1;
 		} else if (pass.value.length < 4) {
