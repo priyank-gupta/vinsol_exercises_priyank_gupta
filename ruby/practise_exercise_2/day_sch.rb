@@ -3,33 +3,23 @@ require "date"
 
 class BusinessCenterHours
 	
-	def initialize (start_t, end_t)
+	def initialize(start_t, end_t)
 		@days_record = {"updated_days" => {}, "closed_days" => []}		#hash to store days updates to new timings and closed days
 		@start_t = start_t.to_i
 		@end_t = end_t.to_i
 	end
 	
-	def update (date, start_t, end_t)
-		if date.class == String				# if input is in string format then parse it in date_time format
-			day,date = parse_date_time(date)
-		end
+	def update(date, start_t, end_t)
+		day,date = parse_date_time(date) if (date.class == String)		# if input is in string format then parse it in date_time format
 		@days_record["updated_days"][date] = [start_t, end_t]		##storing in hash with date as key and start time/end time as values
 	end
 	
 	def closed (*days)
 		days.each do |el|
-			count = 1
-			@days_record["closed_days"].each do |val|
-				if  val == el				#checking whether the given closed day is already in the list or not
-					count = 0
-					break
-				end
-			end
-			if count == 1				#if given closed is not in the list
-				if el.class == String			#if the input is string then parse it in date_time format
-					day,el = parse_date_time(el)
-				end
-				@days_record["closed_days"].push el		#storing closed days in array
+			count = @days_record["closed_days"].include?(el)		#checking whether the given closed day is already in the list or not
+			unless count				#if given closed is not in the list
+				day,el = parse_date_time(el) if el.class == String			#if the input is string then parse it in date_time format
+				@days_record["closed_days"] << el		#storing closed days in array
 			end
 		end	
 	end
@@ -83,20 +73,8 @@ class BusinessCenterHours
 	
 	def is_holiday (date)			
 		day_num = date.wday
-		if day_num == 0				# if the day number is zero ie sunday then true its a holiday
-			return true
-		end
 		day = find_day(day_num)		#finding the day associated to a day_num
-		count = 1
-		@days_record["closed_days"].each do |val|
-			if day == val || date.to_s == val.to_s		# if the particular day is closed or not
-				count = 0
-				return true			# if yes true its a holiday
-			end
-		end
-		if count == 1
-			return false			#else false its not a holiday
-		end
+		count = @days_record["closed_days"].include?(day) || @days_record["closed_days"].to_s.include?(date.to_s)
 	end
 	
 	def parse_date_time (date_time)			#date_time in string format
@@ -113,7 +91,7 @@ class BusinessCenterHours
 	end
 	
 	def find_day (day_num)
-		day = case day_num
+		case day_num
 		when 1
 			:mon
 		when 2
@@ -129,7 +107,6 @@ class BusinessCenterHours
 		else
 			:sun
 		end
-		return day
 	end
 	
 end
