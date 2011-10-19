@@ -16,7 +16,6 @@ class BusinessCenterHours
 			day,date = parse_date_time(date)
 		end
 		@days_record["updated_days"][date] = [start_t, end_t]		##storing in hash with date as key and start time/end time as values
-		
 	end
 	
 	def closed (*days)
