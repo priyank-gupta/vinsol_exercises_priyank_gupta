@@ -62,16 +62,13 @@ class XML_Change_Format
 		people = Nokogiri::XML::Node.new "people", doc
 		doc.add_child(people)
 		
-		
-		for i in 0...arr_out.length do
-			
+		for i in 0...arr_out.length do	
 			person = Nokogiri::XML::Node.new "person", doc
 			people.add_child(person)
 			name = Nokogiri::XML::Node.new "name", doc
 			person.add_child(name)
 			first = Nokogiri::XML::Node.new "first", doc
 			last = Nokogiri::XML::Node.new "last", doc
-			
 			for j in 0...arr_out[i].length do		
 				if (arr_out[i][j] && j == 0)
 					first.content = arr_out[i][j]
@@ -86,7 +83,6 @@ class XML_Change_Format
 		out_doc.puts doc
 		puts "Check output.xml for output"
 	end
-	
 end
 
 begin			#exception block for checking the availability of file

@@ -1,3 +1,4 @@
+## GENERAL COMMENTS - Good job in handling edge cases
 
 require "date"
 
@@ -9,12 +10,17 @@ class BusinessCenterHours
 		@end_t = end_t.to_i
 	end
 	
-	def update(date, start_t, end_t)
-		day,date = parse_date_time(date) if (date.class == String)		# if input is in string format then parse it in date_time format
+	def update (date, start_t, end_t)
+	  #### COMMENT - Should be date.is_a?(String)
+		if date.class == String				# if input is in string format then parse it in date_time format
+			day,date = parse_date_time(date)
+		end
 		@days_record["updated_days"][date] = [start_t, end_t]		##storing in hash with date as key and start time/end time as values
+		
 	end
 	
 	def closed (*days)
+<<<<<<< HEAD
 		days.each do |el|
 			count = @days_record["closed_days"].include?(el)		#checking whether the given closed day is already in the list or not
 			unless count				#if given closed is not in the list
@@ -22,6 +28,33 @@ class BusinessCenterHours
 				@days_record["closed_days"] << el		#storing closed days in array
 			end
 		end	
+=======
+	  
+	  ### COMMENT - Refactored Code
+	  days.each do |el|
+	    unless @days_record["closed_days"].find{ |day| day == el }
+		    day,el = parse_date_time(el) if el.is_a?(String)			#if the input is string then parse it in date_time format
+			  @days_record["closed_days"] << el		#storing closed days in array				
+		  end
+	  end
+	  
+    # days.each do |el|
+    #   count = 1     
+    #   @days_record["closed_days"].each do |val|
+    #     if val == el        #checking whether the given closed day is already in the list or not
+    #       count = 0
+    #       break
+    #     end 
+    #   end
+    #   
+    #   if count == 1       #if given closed is not in the list
+    #     if el.class == String     #if the input is string then parse it in date_time format
+    #       day,el = parse_date_time(el)
+    #     end
+    #     @days_record["closed_days"].push el   #storing closed days in array
+    #   end
+    # end 
+>>>>>>> fea46488e9fbe0bb09617aecbe1147aaa6a7f6cb
 	end
 	
 	def calculate_deadline (meet_dur, date_time)
@@ -71,18 +104,21 @@ class BusinessCenterHours
 		return [start_t, end_t]
 	end
 	
-	def is_holiday (date)			
+	def is_holiday(date)			
 		day_num = date.wday
 		day = find_day(day_num)		#finding the day associated to a day_num
 		count = @days_record["closed_days"].include?(day) || @days_record["closed_days"].to_s.include?(date.to_s)
 	end
 	
 	def parse_date_time (date_time)			#date_time in string format
-		begin					#exception begining block
+	  
+    #### COMMENT - Dont implement a feature in error handling
+    begin         #exception begining block
 			date_time = DateTime.strptime(date_time, "%b %d, %Y %H%M")		#if the date_time string has hours in it then this will execute else
-		rescue
-			date_time = DateTime.strptime(date_time, "%b %d, %Y")			#this will execute
-		end
+    rescue
+      date_time = DateTime.strptime(date_time, "%b %d, %Y")     #this will execute
+    end
+		
 		day_num = date_time.wday
 		day = find_day(day_num)			#finding the day associated to a day_num
 		date = date_time.to_date
@@ -114,7 +150,8 @@ end
 h = BusinessCenterHours.new("0900", "1500")
 
 h.update("Jan 4, 2011", "0800","1300")
-h.update(:sat,"1000","1700")
+h.update(:sat, "1000","1700")
 h.closed(:wed,:thu,"Dec 25, 2011")
-h.calculate_deadline(7*60*60, "Dec 24, 2011 1845")
+h.closed(:wed)
+h.calculate_deadline(12*60*60, "Dec 24, 2011")
 
