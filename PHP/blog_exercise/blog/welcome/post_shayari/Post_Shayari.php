@@ -1,37 +1,42 @@
 <?php session_start();
-if(!isset($_SESSION['usr_name'])) {
-	header("Location: /blog/login_page.php");
-	exit();
-}
-mysql_connect('localhost','priyank','priyank');
-mysql_select_db('blog');
-$usr_name = $_SESSION['usr_name'];
-if(!isset($_SESSION['name'])) {
-	$query = "select name from users where username='$usr_name'" ;
-	$result = mysql_query($query);
-	while($row = mysql_fetch_array($result)) {
-		$name = $row[0];
-		$_SESSION['name'] = $name;
+include "../../db_connect.php";
+include "../../session_check.php";
+include "../../logout.php";
+
+if (isset($_POST['edit']) && $_POST['edit'] = 'Edit' && isset($_POST['edit_del_s_id'])) {
+	$shayari_id = $_POST['edit_del_s_id'];
+	$query1 = "select title, shayari, category from shayari where shayari_id = '$shayari_id'";
+	$result1 = mysql_query($query1);
+	while($row = mysql_fetch_array($result1)) {
+		$title = $row['title'];
+		$shayari = $row['shayari'];
+		$category = $row['category'];
 	}
-} else {
-	$name = $_SESSION['name'];
+	$_SESSION['shayari_id'] = $_POST['edit_del_s_id'];
 }
+
 if (isset($_POST['title']) && isset($_POST['post_shayari']) && isset($_POST['category']) && isset($_POST['submit']) && $_POST['submit'] == 'Post') {
 	$title = $_POST['title'];
-	$post_shayari = mysql_real_escape_string($_POST['post_shayari']);
+	$title = filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS);
+	$post_shayari = $_POST['post_shayari'];
+	$post_shayari = filter_var($post_shayari, FILTER_SANITIZE_SPECIAL_CHARS);
 	$category = $_POST['category'];
-	$query = "insert into shayari(title,shayari,category,username) values (\"$title\",\"$post_shayari\",\"$category\",\"$usr_name\")";
-	$result = mysql_query($query);
+	echo $_SESSION['shayari_id'];
+	if (isset($_SESSION['shayari_id'])) {
+		$shayari_id = $_SESSION['shayari_id'];
+		$query = "update shayari set title = '$title', shayari = '$post_shayari', category = '$category', updated_on = now() where shayari_id = '$shayari_id'";
+		$result = mysql_query($query);
+		unset($_SESSION['shayari_id']);
+	}
+	else {
+		$query = "insert into shayari(title,shayari,category,user_id,updated_on) values (\"$title\",\"$post_shayari\",\"$category\",\"$user_id\",now())";
+		$result = mysql_query($query);
+	}
 	if($result == 1) {
 		header("Location: /blog/welcome/Shayaris/My_Shayari.php");
 	}
 }
-$sql = "select image_name from image where username='$usr_name'";
-$res = mysql_query($sql);
-if(mysql_num_rows($res) == 1) {
-	$image_row = mysql_fetch_array($res);
-	$image = $image_row['image_name'];
-}
+include "../../image_display.php";
 ?>
 <html>
 <head>
@@ -65,10 +70,10 @@ div#float_left >textarea {
 }
 </style>
 </head>
-<body id='main'>
+<body id='main' <?php if(isset($category)) {echo "onload = set_category('".$category."')";}?> >
 	<div>
 		<div id='maindiv'>
-			<div id='logout'><a href='/blog/login_page.php' /><img src='/blog/pictures/logout.jpg' /></a></div>
+			<div id='logout'><form method='post' action='Post_Shayari.php'><input type='hidden' name='logout' value='logout'/><input type='image' src='/blog/pictures/logout.jpg' alt='Logout'/></form></div>
 			<h1><span style="color: #700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">e</span><span style="color:#9b4f4f">r</span><span style="color:#9b4f4f">-</span><span style="color:#700404">O</span><span style="color:#9b4f4f">-</span><span style="color:#700404">S</span><span style="color:#7e1d1d">h</span><span style="color:#8d3636">a</span><span style="color:#9b4f4f">y</span><span style="color:#a96868">a</span><span style="color:#b88282">r</span><span style="color:#c69b9b">i</span></h1>
 			<p id='welcome'> Hi! <?php echo $name ?> </p><br/>
 		</div>
@@ -93,11 +98,11 @@ div#float_left >textarea {
 			<form method='post' action='Post_Shayari.php'>
 				<div>
 					<label for='title'>Title</label><br/>
-					<input type='text' name='title' id='title' />&nbsp;&nbsp;<span class='error' id='error1'></span>
+					<input type='text' name='title' id='title' <?php if(isset($title)) {echo "value=".$title;}?> />&nbsp;&nbsp;<span class='error' id='error1'></span>
 				</div>
 				<div id="float_left">
 					<label for='shayari'>Post Your Shayari Here--</label><br/>
-					<textarea rows='15' cols='50' name='post_shayari' id='post_shayari' ></textarea><br/>
+					<textarea rows='15' cols='50' name='post_shayari' id='post_shayari' ><?php if(isset($shayari)) {echo $shayari;}?></textarea><br/>
 					<span class='error' id='error2'></span>
 				</div>
 				<div id="float_right">

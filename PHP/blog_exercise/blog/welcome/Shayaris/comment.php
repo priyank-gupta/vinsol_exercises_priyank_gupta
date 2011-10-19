@@ -1,18 +1,20 @@
 <?php session_start();
-$usr_name = $_SESSION['usr_name'];
-mysql_connect('localhost','priyank','priyank');
-mysql_select_db('blog');
+$user_id = $_SESSION['user_id'];
+include "../../db_connect.php";
 if(isset($_POST['shayari_id']) && isset($_POST['comment'])) {
-$post_comment = $_POST['comment'];
+$post_comment = filter_var($_POST['comment'], FILTER_SANITIZE_SPECIAL_CHARS);
 $id_shayari = $_POST['shayari_id'];
-$query1 = "insert into comment(comment, shayari_id,username) values('$post_comment','$id_shayari','$usr_name')";
+$query1 = "insert into comment(comment, shayari_id,user_id) values('$post_comment','$id_shayari','$user_id')";
 $result1 = mysql_query($query1);
 }
-$query2 = "select username, comment from comment where shayari_id = '$id_shayari'";
+$query2 = "select user_id, comment from comment where shayari_id = '$id_shayari'";
 $result2 = mysql_query($query2);
 while ($row_comments = mysql_fetch_array($result2)) {
 	$show_comment = $row_comments['comment'];
-	$show_user = $row_comments['username'];
-	echo "<p><b>".$show_user.":</b>&nbsp;&nbsp;".$show_comment."</p>";
+	$u_id = $row_comments['user_id'];
+	$u_name_query = "select username from users where id = '$u_id'";
+	$u_name_result = mysql_query($u_name_query);
+	$row1 = mysql_fetch_array($u_name_result);
+	echo "<p><b>".$row1[0].":</b>&nbsp;&nbsp;".$show_comment."</p>";
 }
 ?>

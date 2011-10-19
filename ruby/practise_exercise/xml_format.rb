@@ -6,7 +6,7 @@
 require 'rubygems'
 require 'nokogiri'
 
-class XML_Format
+class XML_Change_Format
 	
 	##### Dont use global variable that are accessible outside the class here. You can use class variables
 	
@@ -32,11 +32,11 @@ class XML_Format
 	  ## Can you try using some other conditional construct other than loop and break?
 		while true
 		  ###### Use an intuitive variable name
-			temp = root_child_itr.children
+			child = root_child_itr.children
 			
 			##### if temp.children[0]
-			if temp.children[0] == nil			#checking if the node is innermost as innermost node will not be having any childnode
-				@@arr.push temp
+			if child.children[0] == nil			#checking if the node is innermost as innermost node will not be having any childnode
+				@@arr.push child
         break
 			else
 				scan root_child_itr		# iterate over the childnodes if it is not the parent of the innermost node
@@ -95,5 +95,5 @@ rescue StandardError => e			#exception handler
 end
 
 ########### -> This should be XML_Format.new(file).change_format; 	
-XML_Format.new(file)			#instantiating the XML_Foramt class
+XML_Change_Format.new(file)			#instantiating the XML_Change_Format class
 

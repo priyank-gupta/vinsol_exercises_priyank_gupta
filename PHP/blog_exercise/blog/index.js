@@ -10,12 +10,12 @@ function validat()
 		error1.innerHTML = ''; error2.innerHTML = '';
 		var c;
 		if (naam.value == '' || regExpBlank.test(naam.value)) {
-			error1.innerHTML = '*this field cannot be blank';
+			error1.innerHTML = "*this field cannot be blank";
 			naam.focus();
 			c=1;
 		} 	
-		if (pass.value == '' || regExpBlank.test(pass.value)) {
-			error2.innerHTML = '*this field cannot be blank';
+		if (pass.value == '' || regExpBlank.test(pass.value) ) {
+			error2.innerHTML = "*this field cannot be blank";
 			pass.focus();
 			c=1;
 		}else if (pass.value.length < 4) {
