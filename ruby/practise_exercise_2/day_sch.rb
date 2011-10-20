@@ -48,12 +48,13 @@ class BusinessCenterHours
 					date = date_temp.strftime("%b %d, %Y")		                                                          #date of meeting deadline
 					meet_end_time = ("%04d" % meet_end_time).to_s
 					time = DateTime.strptime(meet_end_time,"%H%M").strftime("%H:%M hours")		                          #parsing time in correct format
-					return "#{day} #{date} #{time}"			                                                                #final output
+					"#{day} #{date} #{time}"			                                                                      #final output
 				elsif (end_t.hour - start_t.hour) < 0 && (end_t.min - start_t.min) < 0		                          	#if end time is less than start time of day/start time of meeting
 					date_temp += 1		                                                                                  #move to next day
 				else
 					a = end_t.hour - start_t.hour
 					b = end_t.min - start_t.min
+					######## COMMENT - meet_dur -= (a*100 + b).to_i
 					meet_dur = meet_dur - (a*100 + b).to_i		                                                          #calculating the remaining time left for meeting
 					date_temp += 1		                                                                                	#move to next day
 				end
@@ -67,29 +68,35 @@ class BusinessCenterHours
 	def check_updated(day, date)		                                                                          	#day and date associated to a particular date as argument
 		start_t = @start_t.dup
 		end_t = @end_t.dup
+		##### COMMENT - Make the folowing condition a fuction like you did for is_holiday
 		if @days_record["updated_days"].include?(day) || @days_record["updated_days"].include?(date)
 		  
 		  ####### should be written as - !!@days_record["updated_days"][date] 
+		  ####### Do youo need to use dup here????
 		  
 			start_t = @days_record["updated_days"][date] != nil ? @days_record["updated_days"][date][0].dup : @days_record["updated_days"][day][0].dup 		#store value of start time and
 			end_t = @days_record["updated_days"][date] != nil ? @days_record["updated_days"][date][1].dup : @days_record["updated_days"][day][1].dup		#end time for updated day
 		end				
-		return [start_t, end_t]
+		[start_t, end_t]
 	end
+	
+	
+	
 	
 	def is_holiday?(date)			
 		day = find_day(date.wday)	                                                                              	#finding the day associated to a day_num
 		@days_record["closed_days"].include?(day) || @days_record["closed_days"].include?(date.to_date)
 	end
 	
+	
+	
 	def parse_date_time(date_time)		                                                                        	#date_time in string format
-		#### COMMENT - Dont implement a feature in error handling
+		                                                                                                          #### COMMENT - Dont implement a feature in error handling
 		date_time = date_time =~ /^(\w\w\w \d\d, \d\d\d\d \d\d\d\d)$/ ? DateTime.strptime(date_time, "%b %d, %Y %H%M") : DateTime.strptime(date_time, "%b %d, %Y")
-		day = find_day(date_time.wday)        			                                                              #finding the day associated to a day_num
-		date = date_time.to_date
-		time = date_time.to_time.utc		                                                                        	#finding the time in date_time format
-		return [day, date, time]
+		[find_day(date_time.wday), date_time.to_date, date_time.to_time.utc]
 	end
+	
+	
 	
 	def find_day(day_num)
 		case day_num
