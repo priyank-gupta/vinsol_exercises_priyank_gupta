@@ -12,7 +12,7 @@ class BusinessCenterHours
 	
 	def update(date, start_t, end_t)
 		#### COMMENT - Should be date.is_a?(String)
-		day,date = parse_date_time(date) if date.is_a?(String)		# if input is in string format then parse it in date_time format
+		day, date = parse_date_time(date) if date.is_a?(String)		# if input is in string format then parse it in date_time format
 		@days_record["updated_days"][date] = [start_t, end_t]		##storing in hash with date as key and start time/end time as values
 	end
 	
@@ -76,7 +76,7 @@ class BusinessCenterHours
 	def parse_date_time(date_time)			#date_time in string format
 		#### COMMENT - Dont implement a feature in error handling
 		date_time = date_time =~ /^(\w\w\w \d\d, \d\d\d\d \d\d\d\d)$/ ? DateTime.strptime(date_time, "%b %d, %Y %H%M") : DateTime.strptime(date_time, "%b %d, %Y")
-		day = find_day(date_time.wday)			#finding the day associated to a day_num
+		day = find_day(date_time.wday)        			#finding the day associated to a day_num
 		date = date_time.to_date
 		time = date_time.strftime("%H%M").to_i			#finding the time in date_time format
 		return [day, date, time]
