@@ -43,15 +43,13 @@ module LongestCommonSubsequence
 			end
 		end
 	
-		c.max.max																		#finding the length of longest subsequence
+		c.flatten.max																		#finding the length of longest subsequence
 	end
 	
 	def str_with_lcs(opts, subseq_length_arr)								#finding the string with longest subsequence in options array
 		max_length = subseq_length_arr.max
-		arr = []
 		### Use collect for below functinality
-		subseq_length_arr.each_with_index { |val, index|	arr.push opts[index] if val == max_length }
-		arr
+		opts.collect { |val| val if subseq_length_arr[opts.index(val)] == max_length}
 	end
 end			
 	
@@ -80,7 +78,7 @@ begin
 	opts = d.options(num)
 	answer = d.find_correct_word(wrong_word, opts)
 	puts "Answer :" 
-	answer.each {|val| puts "	#{val}"}																		#printing each element separately by extracting them from array
+	answer.each {|val| puts "	#{val}" unless val == nil}																		#printing each element separately by extracting them from array
 	print "Do you want to continue (y/Y for yes): "
 	choice = gets.chomp
 end while (choice == 'y' || choice == 'Y')
