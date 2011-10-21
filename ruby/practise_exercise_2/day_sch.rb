@@ -6,19 +6,14 @@ require "date"
 class BusinessCenterHours
 	
 	def initialize(start_t, end_t)
-		@days_record = {"updated_days" => {}, "closed_days" => []}		#hash to store days updates to new timings and closed days
-		@start_t, @end_t = string_to_date(start_t), string_to_date(end_t)
+		@days_record = {"updated_days" => {}, "closed_days" => []}																								#hash to store days updates to new timings and closed days
+		@start_t, @end_t = string_to_time(start_t), string_to_time(end_t)
 	end
-
-  def string_to_date(date)
-    DateTime.strptime(date, "%H%M").to_time.utc
-  end
-    
 	
 	def update(date, start_t, end_t)
 		#### COMMENT - Should be date.is_a?(String)
 		day,date = parse_date_time(date) if date.is_a?(String)		                                                # if input is in string format then parse it in date_time format
-		@days_record["updated_days"][date] = [string_to_date(start_t), string_to_date(end_t)]		                  #storing in hash with date as key and start time/end time as values
+		@days_record["updated_days"][date] = [string_to_time(start_t), string_to_time(end_t)]		                  #storing in hash with date as key and start time/end time as values
 	end
 	
 	def closed(*days)
@@ -26,7 +21,7 @@ class BusinessCenterHours
 		days.each do |el|
 			unless @days_record["closed_days"].include?(el)	                                                  			#if given closed is not in the list
 				day,el = parse_date_time(el) if el.is_a?(String)                                                			#if the input is string then parse it in date_time format
-				@days_record["closed_days"] << el		#storing closed days in array
+				@days_record["closed_days"] << el																																			#storing closed days in array
 			end
 		end	
 	end
@@ -35,8 +30,8 @@ class BusinessCenterHours
 		meet_dur /= 36
 		day, date, time = parse_date_time(date_time)			                                                        #parsing variable in date_time format
 		start_t, end_t = check_updated(day, date)			                                                          	#checking if the date or day is updated to have new start time/end time
-		start_t = time.dup if (start_t.hour < time.hour && start_t.min < time.min)
-		date_temp = date.dup
+		start_t = time if (start_t.hour < time.hour && start_t.min < time.min)
+		date_temp = date
 		
 		loop do
 			if is_holiday?(date_temp)			                                                                          # checking if a particular day is holiday
@@ -48,14 +43,14 @@ class BusinessCenterHours
 					date = date_temp.strftime("%b %d, %Y")		                                                          #date of meeting deadline
 					meet_end_time = ("%04d" % meet_end_time).to_s
 					time = DateTime.strptime(meet_end_time,"%H%M").strftime("%H:%M hours")		                          #parsing time in correct format
-					"#{day} #{date} #{time}"			                                                                      #final output
+					return "#{day} #{date} #{time}"			                                                                      #final output
 				elsif (end_t.hour - start_t.hour) < 0 && (end_t.min - start_t.min) < 0		                          	#if end time is less than start time of day/start time of meeting
 					date_temp += 1		                                                                                  #move to next day
 				else
 					a = end_t.hour - start_t.hour
 					b = end_t.min - start_t.min
 					######## COMMENT - meet_dur -= (a*100 + b).to_i
-					meet_dur = meet_dur - (a*100 + b).to_i		                                                          #calculating the remaining time left for meeting
+					meet_dur -= (a*100 + b)		                                                          #calculating the remaining time left for meeting
 					date_temp += 1		                                                                                	#move to next day
 				end
 				start_t, end_t = check_updated(find_day(date_temp.wday), date_temp)		                              	#check if the next day has its start time/end time updated
@@ -65,22 +60,28 @@ class BusinessCenterHours
 	
 	private
 	
+  def string_to_time(str_time)
+    DateTime.strptime(str_time, "%H%M").to_time.utc
+  end
+    
 	def check_updated(day, date)		                                                                          	#day and date associated to a particular date as argument
-		start_t = @start_t.dup
-		end_t = @end_t.dup
+		start_t = @start_t
+		end_t = @end_t
 		##### COMMENT - Make the folowing condition a fuction like you did for is_holiday
-		if @days_record["updated_days"].include?(day) || @days_record["updated_days"].include?(date)
+		if is_updated?(day, date)
 		  
 		  ####### should be written as - !!@days_record["updated_days"][date] 
 		  ####### Do youo need to use dup here????
 		  
-			start_t = @days_record["updated_days"][date] != nil ? @days_record["updated_days"][date][0].dup : @days_record["updated_days"][day][0].dup 		#store value of start time and
-			end_t = @days_record["updated_days"][date] != nil ? @days_record["updated_days"][date][1].dup : @days_record["updated_days"][day][1].dup		#end time for updated day
+			start_t = @days_record["updated_days"][date] ? @days_record["updated_days"][date][0] : @days_record["updated_days"][day][0] 		#store value of start time and
+			end_t = @days_record["updated_days"][date] ? @days_record["updated_days"][date][1] : @days_record["updated_days"][day][1]		#end time for updated day
 		end				
 		[start_t, end_t]
 	end
 	
-	
+	def is_updated?(day, date)
+		@days_record["updated_days"][date] || @days_record["updated_days"][day]
+	end
 	
 	
 	def is_holiday?(date)			
@@ -92,7 +93,7 @@ class BusinessCenterHours
 	
 	def parse_date_time(date_time)		                                                                        	#date_time in string format
 		                                                                                                          #### COMMENT - Dont implement a feature in error handling
-		date_time = date_time =~ /^(\w\w\w \d\d, \d\d\d\d \d\d\d\d)$/ ? DateTime.strptime(date_time, "%b %d, %Y %H%M") : DateTime.strptime(date_time, "%b %d, %Y")
+		date_time = date_time =~ /^([\w]{3} [\d]{2}, [\d]{4} [\d]{4})$/ ? DateTime.strptime(date_time, "%b %d, %Y %H%M") : DateTime.strptime(date_time, "%b %d, %Y")
 		[find_day(date_time.wday), date_time.to_date, date_time.to_time.utc]
 	end
 	
