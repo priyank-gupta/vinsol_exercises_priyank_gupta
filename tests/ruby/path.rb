@@ -12,12 +12,18 @@ class Flights
 		puts "How many combinations you want to enter"
 		num = gets.chomp.to_i
 		puts "Path, start time, arrival time, fare (Ex: A-B, 0925, 1245, 100)"
+
 		for i in 0...num do
 			print "Flight #{i+1} : "
 			path = gets.chomp
 			arr = path.split(/\s*,\s*/)
+
 			for j in 1...arr.length do
+        #### COMMENT - Dont need '== nil'
 				@combinations[arr[0].upcase.split(/\s*-\s*/)] = [] if @combinations[arr[0].upcase.split(/\s*-\s*/)] == nil
+				#### COMMENT - Can be written as
+				#### @combinations[arr[0].upcase.split(/\s*-\s*/)] << (( j == 1 || j == 2 ) ? str_to_time(arr[j]) : arr[j].to_i
+				
 				if ( j == 1 || j == 2 )
 					@combinations[arr[0].upcase.split(/\s*-\s*/)] << str_to_time(arr[j])
 				else
@@ -34,7 +40,7 @@ class Flights
 		initial_node, final_node = gets.chomp.upcase.split(/\s*-\s*/)
 		unvisited_nodes = []
 		node_set_price = {initial_node => [0,initial_node]}
-		node_set_time = {initial_node => [0,initial_node,str_to_time("0000")]}
+		node_set_time = {initial_node => [0,initial_node, str_to_time("0000")]}
 		
 		@combinations.each do |key, value|
 			for i in 0...2 do
@@ -75,6 +81,7 @@ class Flights
 								temp = node_set[current_node][0] + (val[1] - val[0])
 							end
 							path_temp =	node_set[current_node][1] + key[1]
+							#### COMMENT - Can be written in a single line
 							if node_set[key[1]] == nil
 								node_set[key[1]] = [temp, path_temp, val[1]]
 							elsif node_set[key[1]][0] > temp
