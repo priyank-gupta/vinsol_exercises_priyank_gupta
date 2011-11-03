@@ -1,3 +1,4 @@
+#### like the implementation!
 
 module DefineMethod
 	def def_meth(meth)
