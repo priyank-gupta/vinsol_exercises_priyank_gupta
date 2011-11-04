@@ -24,7 +24,6 @@ classname.class_eval do
     @value = arr
 
     ### COMMENT  - Why do we need this?
-    @inst = self
   end
 
   def self.create_meth(filename)
@@ -42,18 +41,17 @@ classname.class_eval do
 
     person = obj.collect {|val| new(val)}
 
-    class_eval do
-      methds.each_with_index do |val, index|                     
-        define_method(val) do
-          @value[index]
-        end
+    methds.each_with_index do |val, index|                     
+      define_method(val) do
+        @value[index]
       end
     end
+    
     person
   end
 end
 
 person = classname.create_meth(filename)
-# p person[0].city
-# p person[1].name
-# p person[2].age
+p person[0].city
+p person[1].name
+p person[2].age
