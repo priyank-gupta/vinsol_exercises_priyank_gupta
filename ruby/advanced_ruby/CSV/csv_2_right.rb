@@ -1,4 +1,3 @@
-
 module ImportFile
 	def import(filename)
 		begin
@@ -48,6 +47,7 @@ end
 filename = "Persons.csv"
 fname = filename.split(/\./)
 classname = fname[0]
+
 klass = create_class(classname)
 person = klass.create_meth(filename)
 p person[0].name
