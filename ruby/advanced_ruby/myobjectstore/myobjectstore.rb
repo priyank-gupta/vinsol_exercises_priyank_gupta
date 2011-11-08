@@ -3,22 +3,34 @@
 module MyObjectStore
 	
 	### Dont use constant here, constants shouldn't be modified
-	OBJ_STR = []
+	
+	def self.get_obj_str
+		@@obj_str ||= []
+	end 
 	
 	def self.included(cls)
 		cls.extend ClassMethods
+	end
+	
+	def method_missing(meth, *args, &block)
+		meth_temp = meth.to_s.scan(/\w+/).join
+		if instance_variables.include?("@#{meth_temp}".to_sym)
+			self.class.attr_accessor meth_temp.to_sym 
+		else
+			super
+		end
 	end
 	
 	
 	def save
 		if self.class.instance_methods.include?(:validate)
 			if validate(self)
-				MyObjectStore::OBJ_STR << self
+				MyObjectStore::get_obj_str << self
 			else
 				puts "Object has already been saved"
 			end
 		else
-			MyObjectStore::OBJ_STR << self
+			MyObjectStore::get_obj_str << self
 		end
 	end
 	
@@ -33,33 +45,22 @@ module MyObjectStore
 					meth_name = "find_by_#{meth}"
 					define_method(meth_name) do |param|
 						a = []
-						MyObjectStore::OBJ_STR.collect {|val| a << val if (eval "val.#{meth}") == param }
+						MyObjectStore::get_obj_str.collect {|val| a << val if (eval "val.#{meth}") == param }
 						a
 					end
 				end
 			end
 			
-			
+			super
 			##### Can be written as - attr_accessor *args
-			
-			
-			args.each do |meth|
-				
-				define_method(meth) do
-					eval "@#{meth}"
-				end
-				define_method("#{meth}=") do |val|
-					eval "@#{meth} = val"
-				end
-			end
 		end
 		
 		def method_missing(meth, *args, &block)
 			begin
 				if args.length > 0
-					eval "MyObjectStore::OBJ_STR.to_enum.#{meth}(#{args.join}) &block"
+					eval "MyObjectStore::get_obj_str.to_enum.#{meth}(#{args.join}) &block"
 				else
-					eval "MyObjectStore::OBJ_STR.to_enum.#{meth} &block"
+					eval "MyObjectStore::get_obj_str.to_enum.#{meth} &block"
 				end
 			rescue
 				super
@@ -74,27 +75,27 @@ class Play
 
   attr_accessor :name, :age, :email
 	
-  # def initialize(name, age, email)
-  #   @name = name
-  #   @age = age
-  #   @email = email
-  # end
+  #def initialize(name, age, email)
+		#@name = name
+		#@age = age
+		#@email = email
+  #end
 	
 	def validate(param)
-		!MyObjectStore::OBJ_STR.include?(param)
+		!MyObjectStore::get_obj_str.include?(param)
 	end
 	
 end
 
-p1 = Play.new
+p1 = Play.new("priyank", 23, "priyank.gupta@vinsol.com")
 p1.name = "priyank"
 p1.age = 23
 p1.email = "priyank.gupta@vinsol.com"
-p2 = Play.new
+p2 = Play.new("sushant", 22, "sushant.mittal@vinsol.com")
 p2.name = "sushant"
 p2.age = 22
 p2.email = "sushant.mittal@vinsol.com"
-p3 = Play.new
+p3 = Play.new("esha", 22, "esha@vinsol.com")
 p3.name = "esha"
 p3.age = 22
 p3.email = "esha.mukhergee@vinsol.com"
@@ -103,7 +104,7 @@ p2.save
 p3.save
 
 p Play.find_by_name("priyank")
-p Play.methods.include?("find_by_name")
+p Play.methods.include?(:find_by_name)
 p Play.find_by_age(22)
 p Play.count
-p Play.asdkhf
+#p Play.asdkhf
