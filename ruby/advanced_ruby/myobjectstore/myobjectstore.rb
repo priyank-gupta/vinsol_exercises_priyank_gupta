@@ -1,11 +1,14 @@
+#### COMMENT - the functionality shouldnt be dependent on attr_accessor
 
 module MyObjectStore
 	
+	### Dont use constant here, constants shouldn't be modified
 	OBJ_STR = []
 	
 	def self.included(cls)
 		cls.extend ClassMethods
 	end
+	
 	
 	def save
 		if self.class.instance_methods.include?(:validate)
@@ -19,10 +22,12 @@ module MyObjectStore
 		end
 	end
 	
+	
 	module ClassMethods
 		
 		def attr_accessor(*args)
 			ghost  = class << self; self; end
+			### COMMENT - dont use eval
 			ghost.instance_eval do
 				args.each do |meth|
 					meth_name = "find_by_#{meth}"
@@ -33,7 +38,13 @@ module MyObjectStore
 					end
 				end
 			end
+			
+			
+			##### Can be written as - attr_accessor *args
+			
+			
 			args.each do |meth|
+				
 				define_method(meth) do
 					eval "@#{meth}"
 				end
@@ -61,7 +72,13 @@ class Play
 	
 	include MyObjectStore
 
-	attr_accessor :name, :age, :email
+  attr_accessor :name, :age, :email
+	
+  # def initialize(name, age, email)
+  #   @name = name
+  #   @age = age
+  #   @email = email
+  # end
 	
 	def validate(param)
 		!MyObjectStore::OBJ_STR.include?(param)
@@ -86,7 +103,7 @@ p2.save
 p3.save
 
 p Play.find_by_name("priyank")
-p Play.methods.include?(:find_by_name)
+p Play.methods.include?("find_by_name")
 p Play.find_by_age(22)
 p Play.count
 p Play.asdkhf
