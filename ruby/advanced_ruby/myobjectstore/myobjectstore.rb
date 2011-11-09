@@ -1,5 +1,5 @@
 #### COMMENT - the functionality shouldnt be dependent on attr_accessor
-
+#### attr_accessor shouldn'y be created for class by default
 module MyObjectStore
 	
 	### Dont use constant here, constants shouldn't be modified
