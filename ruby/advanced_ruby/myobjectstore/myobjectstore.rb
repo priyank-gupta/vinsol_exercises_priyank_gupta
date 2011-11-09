@@ -15,7 +15,7 @@ module MyObjectStore
 	def method_missing(meth, *args, &block)
 		meth_temp = meth.to_s.scan(/\w+/).join
 		if instance_variables.include?("@#{meth_temp}".to_sym)
-			self.class.attr_accessor meth_temp.to_sym 
+			self.class.def_meth(meth_temp.to_sym) 
 		else
 			super
 		end
@@ -37,21 +37,22 @@ module MyObjectStore
 	
 	module ClassMethods
 		
-		def attr_accessor(*args)
+		def def_meth(meth)
 			ghost  = class << self; self; end
-			
-			### COMMENT - dont use eval
 			ghost.instance_eval do
-				args.each do |meth|
-					meth_name = "find_by_#{meth}"
-					define_method(meth_name) do |param|
-						a = []
-						MyObjectStore::get_obj_str.collect {|val| a << val if (eval "val.#{meth}") == param }
-						a
-					end
+				meth_name = "find_by_#{meth}"
+				define_method(meth_name) do |param|
+					a = []
+					MyObjectStore::get_obj_str.collect {|val| a << val if val.instance_variable_get("@#{meth}") == param}
+					a
 				end
 			end
-			
+		end
+		
+		
+		def attr_accessor(*args)
+			args.each {|val| def_meth(val) }
+			### COMMENT - dont use eval
 			super
 			##### Can be written as - attr_accessor *args
 		end
@@ -60,11 +61,7 @@ module MyObjectStore
 			begin
 			  #### Can be written as - eval "MyObjectStore::get_obj_str.to_enum.#{meth}(*args) &block"
 			  #### Using *args gives comma seperated values, using args gives array
-				if args.length > 0
-					eval "MyObjectStore::get_obj_str.to_enum.#{meth}(#{args.join}) &block"
-				else
-					eval "MyObjectStore::get_obj_str.to_enum.#{meth} &block"
-				end
+				MyObjectStore::get_obj_str.to_enum.send(meth, *args, &block)
 			rescue
 				super
 			end
@@ -109,5 +106,6 @@ p3.save
 p Play.find_by_name("priyank")
 p Play.methods.include?(:find_by_name)
 p Play.find_by_age(22)
+p Play.first(2)
 p Play.count
 #p Play.asdkhf
