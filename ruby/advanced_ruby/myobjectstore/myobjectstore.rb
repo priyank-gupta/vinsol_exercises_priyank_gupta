@@ -39,6 +39,7 @@ module MyObjectStore
 		
 		def attr_accessor(*args)
 			ghost  = class << self; self; end
+			
 			### COMMENT - dont use eval
 			ghost.instance_eval do
 				args.each do |meth|
@@ -57,6 +58,8 @@ module MyObjectStore
 		
 		def method_missing(meth, *args, &block)
 			begin
+			  #### Can be written as - eval "MyObjectStore::get_obj_str.to_enum.#{meth}(*args) &block"
+			  #### Using *args gives comma seperated values, using args gives array
 				if args.length > 0
 					eval "MyObjectStore::get_obj_str.to_enum.#{meth}(#{args.join}) &block"
 				else
@@ -73,13 +76,13 @@ class Play
 	
 	include MyObjectStore
 
-  attr_accessor :name, :age, :email
+  # attr_accessor :name, :age, :email
 	
-  #def initialize(name, age, email)
-		#@name = name
-		#@age = age
-		#@email = email
-  #end
+	  def initialize(name, age, email)
+	    @name = name
+	    @age = age
+	    @email = email
+	  end
 	
 	def validate(param)
 		!MyObjectStore::get_obj_str.include?(param)
