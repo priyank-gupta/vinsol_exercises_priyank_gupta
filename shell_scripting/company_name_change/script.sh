@@ -2,9 +2,6 @@
 
 if [ -e "./$1" ] && [ -r "./$1" ] && [ -w "./$1" ]; then
 
-  exec 10<&0
-  exec < $1
-
   while read LINE; do
 
     if [[ ! $LINE =~ (http://www\..+\.com) && $LINE =~ ^(.+)(www\..+\.com)$ ]]; then
@@ -17,8 +14,6 @@ if [ -e "./$1" ] && [ -r "./$1" ] && [ -w "./$1" ]; then
 
   mv $1{.t,}
   
-  exec 0<&10 10<&-
-
 else
   echo "File $1 doesn't exist or don't have appropriate permissions for read/write."
 fi
