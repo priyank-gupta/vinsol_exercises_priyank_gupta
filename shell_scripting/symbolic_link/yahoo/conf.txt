@@ -1,0 +1,2 @@
+This is a test configure file in yahoo directory.
+We are going to make symlink of this file in google directory.
