@@ -3,8 +3,8 @@
 P=/home/priyank/vinsol_exercises_priyank_gupta/shell_scripting/version_change/project/abc
 
 if [ ! -d "$P/2.0" ]; then
-  A=$( mkdir "$P/2.0" )
-  B=$( mkdir "$P/2.0/code" )
+  mkdir $P/2.0
+  mkdir $P/2.0/code
 fi
 
 for f in $( ls "$P/1.0/code" ); do
