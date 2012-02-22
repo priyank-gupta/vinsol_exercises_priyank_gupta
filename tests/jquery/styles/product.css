@@ -1,0 +1,58 @@
+
+#main {
+  width: 50%;
+  margin: auto;
+}
+
+.float_left {
+  float: left;
+}
+
+.float_right {
+  float: right;
+}
+
+#brands {
+  margin-bottom: 20px;
+}
+
+.striped {
+  background-color: #F77B7B;
+}
+
+table, td, th, tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 4px;
+}
+
+br {
+  clear: both;
+}
+
+#toggle_tabs {
+  margin-bottom: 10px;
+}
+
+#toggle_tabs a {
+  background-color: #8FC3F7;
+  color: #AF5315;
+  padding: 5px;
+  text-decoration: none;
+}
+
+#toggle_tabs a:hover {
+  background-color: #2E90F2;
+}
+
+.active {
+  background-color: #2E90F2 !important;
+}
+
+#for_products_display {
+  overflow: auto;
+}
+

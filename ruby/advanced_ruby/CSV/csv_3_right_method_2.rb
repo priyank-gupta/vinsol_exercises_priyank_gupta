@@ -22,8 +22,6 @@ classname.class_eval do
 
   def initialize(arr)
     @value = arr
-
-    ### COMMENT  - Why do we need this?
   end
 
   def self.create_meth(filename)

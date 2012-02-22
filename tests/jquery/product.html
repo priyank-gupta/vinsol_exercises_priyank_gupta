@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+  <head>
+    <title>Store Front</title>
+    <link rel="stylesheet" type="text/css" href="styles/product.css" />
+    <script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="scripts/product.js"></script>
+  </head>
+  
+  <body>
+    <div id='main'>
+      <div>
+        <h2>Store Front</h2>
+      </div>
+        
+      <div class="float_left" id='left_sec'>
+        <fieldset id='brands'>
+          <legend>Brands</legend>
+          <input type='checkbox' name='a' value="BRAND A"/>Brand A<br />
+          <input type='checkbox' name='b' value="BRAND B"/>Brand B<br />
+          <input type='checkbox' name='c' value="BRAND C"/>Brand C<br />
+          <input type='checkbox' name='d' value="BRAND D"/>Brand D
+        </fieldset>
+        
+        <fieldset id='colors'>
+          <legend>Colors</legend>
+          <input type='checkbox' name='yellow' value="Yellow"/>Yellow<br />
+          <input type='checkbox' name='red' value="Red"/>Red<br />
+          <input type='checkbox' name='green' value="Green"/>Green<br />
+          <input type='checkbox' name='blue' value="Blue"/>Blue
+        </fieldset>
+      </div>
+
+      <div class="float_left" id="right_sec">
+        <div id='toggle_tabs' align='center'>
+          <a href="javascript:" class='active'>All Products</a>
+          <a href="javascript:">Available Products</a>
+        </div>
+        
+        <div id='for_products_display'>
+          <fieldset>
+            <legend>Products</legend>
+            <table id='products'>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Brand</th>
+                <th>Sold Out</th>
+              </tr>
+            </table>
+          </fieldset>
+        </div>
+      </div><br/>
+      
+    </div>
+  </body>
+</html>
